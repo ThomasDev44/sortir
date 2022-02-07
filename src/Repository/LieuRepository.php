@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Participant;
+use App\Entity\Lieu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Participant|null find($id, $lockMode = null, $lockVersion = null)
- * @method Participant|null findOneBy(array $criteria, array $orderBy = null)
- * @method Participant[]    findAll()
- * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Lieu|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Lieu|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Lieu[]    findAll()
+ * @method Lieu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantRepository extends ServiceEntityRepository
+class LieuRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Participant::class);
+        parent::__construct($registry, Lieu::class);
     }
 
     // /**
