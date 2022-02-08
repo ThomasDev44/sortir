@@ -184,3 +184,13 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/symfony,phpstorm,phpunit
 /.env.local
 /config/packages/doctrine_migrations.yaml
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/Projet.iml
+/.idea/symfony2.xml
+/.idea/commandlinetools/Symfony_07_02_2022_13_25.xml
+/.idea/vcs.xml
