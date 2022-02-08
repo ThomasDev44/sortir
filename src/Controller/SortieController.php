@@ -21,9 +21,10 @@ class SortieController extends AbstractController
             'sorties' => $sortieRepository->findAll(),
         ]);
     }
-
-    #[Route('/ajouter', name: 'sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+//    #[isGranted('ROLE_USER')]
+    #[Route('/ajouter', name: 'sortie_ajouter', methods: ['GET', 'POST'])]
+    public function new(Request $request,
+                        EntityManagerInterface $entityManager): Response
     {
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
@@ -33,10 +34,10 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('sortie_show', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('sortie/new.html.twig', [
+        return $this->renderForm('sortie/ajouter.html.twig', [
             'sortie' => $sortie,
             'form' => $form,
         ]);
