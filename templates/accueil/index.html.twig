@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <form action="" method="post">
+        <h4>Filtrer les sorties</h4>
+        <div class="select">
+            <label for="sites-select">Site :</label>
+            <select name="sites" id="sites-select">
+                {% for eachSite in sites %}
+                    <option value="{{ eachSite.nom }}">{{ eachSite.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="search">
+            <label for="search">Le nom de la sortie contient : </label>
+            <input type="text" id="search" name="search" placeholder="search">
+        </div>
+        <div class="date">
+
+            <label for="start">Entre </label>
+            <input type="datetime-local" id="start" name="trip-start">
+
+            <label for="end">et </label>
+            <input type="datetime-local" id="end" name="trip-end">
+
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="organisateur" name="organisateur">
+            <label for="organisateur">Sorties dont je suis l'organisateur/trice</label>
+
+            <input type="checkbox" id="inscrit" name="inscrit">
+            <label for="inscrit">Sorties auxquelles je suis inscrit/e</label>
+
+            <input type="checkbox" id="pasInscrit" name="pasInscrit">
+            <label for="pasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
+
+            <input type="checkbox" id="passee" name="passee">
+            <label for="passee">Sorties passées</label>
+        </div>
+        <button type="submit" value="submit">Rechercher</button>
+    </form>
+    <div class="container-table">
+    <table>
+        <tr>
+            <th>Nom de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Clôture</th>
+            <th>inscrits/places</th>
+            <th>Etat</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            {% for eachSortie in sorties %}
+                <td>{{ eachSortie.nom }}</td>
+                <td>{{ eachSortie.dateHeureDebut }}</td>
+                <td>{{ eachSortie.dateLimiteInscription }}</td>
+                <td>{{ eachSortie.etat.libelle }}</td>
+                {% set isInscrit = false %}
+                {% for eachParticipant in eachsortie.participants %}
+                    {% if eachParticipant.username == app.user.userIdentifier %}
+                        {% set isInscrit = true %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if isInscrit == true %}
+                    <td>x</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ eachSortie.organisateur.nom }}</td>
+                {% set isOrganisateur = false %}
+                {% if eachsortie.organisateur.username == app.user.userIdentifier %}
+                    {% set isOrganisateur = true %}
+                {% endif %}
+                <td>
+                    {% if eachSortie.etat != 'Créée' %}
+                        <a href="{{ path('') }}">Afficher</a>
+                    {% elseif (eachSortie.etat == 'Créee') and (isOrganisateur == true) %}
+                        <a href="{{ path('') }}">Modifier - </a>
+                        <a href="{{ path('') }}">Publier</a>
+                    {% elseif  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
+                        <a href="{{ path('') }}"> - Annuler</a>
+                    {% elseif isInscrit == true %}
+                        <a href="{{ path('') }}"> - Se désister</a>
+                    {% elseif (isInscrit == false) and (eachSortie.etat == 'Ouverte') %}
+                        <a href="{{ path('') }}"> - S'inscrire</a>
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+    </div>
+    <button><a href="{{ path('main_accueil') }}"></a>Créer une sortie</button>
+{% endblock %}
