@@ -43,19 +43,29 @@ class AccueilController extends AbstractController
         $choixPasInscrit = $request->request->get('pasInscrit');
         $choixPassee = $request->request->get('passee');
 
-        if ($choixSite == 'Tous') {
+        if ($choixSite != 'Tous'){
+            $leSiteId = $siteRepository->findOneBy(['nom' => $choixSite]);
+            $leSiteId = $leSiteId->getId();
+        }
+        else {
+            $leSiteId = -1;
+        }
+        if ((($choixDateStart != null) and ($choixDateEnd == null)) or (($choixDateEnd != null) and $choixDateStart == null)) {
+            $this->addFlash('error', 'Veuillez sélectionner les deux dates');
             $sorties = $sortieRepository->findAll();
+
         } else {
-            $leSite = $siteRepository->findOneBy(['nom' => $choixSite]);
-            $sorties = $sortieRepository->findBy(['site' => $leSite]);
+            $sorties = $sortieRepository->selectSortiesAvecFiltres($leSiteId, $choixSearch, $choixDateStart, $choixDateEnd,
+                $choixOrganisateur, $choixInscrit, $choixPasInscrit, $choixPassee);
         }
 
-        $leSite = $choixSite;
+
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
             "sorties" => $sorties,
             "sites" => $sites,
-            "leSite" => $leSite,
+            "leSite" => $choixSite,
+            "choixOrganisateur" => $choixOrganisateur,
         ]);
     }
 
