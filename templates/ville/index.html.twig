@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les villes{% endblock %}
+{% block header %}
+    <link rel="stylesheet" href="{{ asset('css/ville-index.css') }}">
+{% endblock %}
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Code postal</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <form action="{{ path('ville_edit', {'id': ville.id}) }}">
+                        <input class="btn-ghost" type="submit" value="Modifier" />
+                    </form>
+                    <form method="post" action="{{ path('ville_delete', {'id': ville.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input class="btn-ghost" type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
+                        <input class="btn-ghost" type="submit" value="Supprimer" />
+                    </form>
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="4">Pas de villes enregistrées</td>
+            </tr>
+        {% endfor %}
+{#        {{ include('ville/_form.html.twig', {'button_label': 'Update'}) }}#}
+{#        Formulaire d'ajout de ville#}
+        {{ include('ville/_form.html.twig') }}
+        </tbody>
+    </table>
+
+{% endblock %}

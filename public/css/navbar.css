@@ -1,0 +1,13 @@
+.navbar-sortir {
+    justify-content: space-between;
+    background: white;
+}
+
+.navbar-sortir .navbar-collapse {
+    flex-grow: 0;
+}
+
+.navbar-sortir .navbar-brand img {
+    width: 40px;
+}
+
