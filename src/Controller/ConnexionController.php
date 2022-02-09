@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class ConnexionController extends AbstractController
 {
@@ -25,11 +26,12 @@ class ConnexionController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $checkboxInput = $request->request->get("remember_me");
-        if ($checkboxInput != null) {
-            $lastUsername = $authenticationUtils->getLastUsername();
-        } else {
-            $lastUsername = '';
-        }
+//        if ($checkboxInput != null) {
+            $lastUsername = $request->cookies->get('cookieUsername');
+            dump('cookieUsername');
+//        } else {
+//            $lastUsername = '';
+//        }
 
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

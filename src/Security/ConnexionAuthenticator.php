@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use phpDocumentor\Reflection\Types\Null_;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,10 +32,18 @@ class ConnexionAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        $cookieUsername = '';
         $username = $request->request->get('username', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
-
+        $checkbox_remember_me = $request->request->get('remember_me');
+        if ($checkbox_remember_me != null){
+            $response = new Response();
+            $expires = time() + 36000;
+            $cookie = Cookie::create('cookieUsername', $username,  $expires);
+            //$cookie = $response->headers->setCookie(Cookie::create('foo', 'bar'));
+            $response->headers->setCookie($cookie);
+        }
 
         return new Passport(
             new UserBadge($username),
@@ -46,6 +56,7 @@ class ConnexionAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }

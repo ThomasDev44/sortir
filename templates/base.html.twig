@@ -34,7 +34,7 @@
                             <a class="nav-link" href="#">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Se connecter</a>
+                            <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">S'inscrire</a>
@@ -43,7 +43,7 @@
                             <a class="nav-link" href="#">Mon profil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Se deconnecter</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
                         </li>
                         <li class="nav-item dropdown">
                             <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/Sponge_bob.png') }}" />

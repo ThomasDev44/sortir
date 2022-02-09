@@ -24,6 +24,8 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setAdministrateur('false');
+            $user->setActif('false');
             $user->setPassword(
             $userPasswordHasher->hashPassword(
                     $user,
@@ -34,11 +36,11 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-            return $this->redirectToRoute('test2');
-            /*return $userAuthenticator->authenticateUser(
+//            return $this->redirectToRoute('test2');
+            return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
-                $request);*/
+                $request);
 
         }
 
