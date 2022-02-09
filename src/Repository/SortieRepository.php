@@ -37,11 +37,15 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('s.nom LIKE :choixSearch')
                 ->setParameter('choixSearch', '%' . $choixSearch . '%');
         }
-        if (($choixDateStart != null) and ($choixDateEnd != null)) {
+        if ($choixDateStart != null) {
             $qb
                 ->andWhere('s.dateHeureDebut >= :choixDateStart')
+                ->setParameter('choixDateStart', $choixDateStart);
+        }
+        if ($choixDateEnd != null) {
+            $qb
                 ->andWhere('s.dateHeureDebut <= :choixDateEnd')
-                ->setParameters(array('choixDateStart' => $choixDateStart, 'choixDateEnd' => $choixDateEnd));
+                ->setParameter('choixDateEnd', $choixDateEnd);
         }
         if ($choixOrganisateur != null) {
             $user = $this->getEntityManager()->getRepository(Participant::class)->find($choixOrganisateur);

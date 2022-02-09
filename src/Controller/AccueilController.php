@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use DateInterval;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +44,9 @@ class AccueilController extends AbstractController
         $choixPasInscrit = $request->request->get('pasInscrit');
         $choixPassee = $request->request->get('passee');
 
+
+
+
         if ($choixSite != 'Tous'){
             $leSiteId = $siteRepository->findOneBy(['nom' => $choixSite]);
             $leSiteId = $leSiteId->getId();
@@ -65,7 +69,13 @@ class AccueilController extends AbstractController
             "sorties" => $sorties,
             "sites" => $sites,
             "leSite" => $choixSite,
+            "choixSearch" => $choixSearch,
+            "choixDateStart" => $choixDateStart,
+            "choixDateEnd" => $choixDateEnd,
             "choixOrganisateur" => $choixOrganisateur,
+            'choixInscrit' => $choixInscrit,
+            'choixPasInscrit' => $choixPasInscrit,
+            'choixPassee' => $choixPassee,
         ]);
     }
 

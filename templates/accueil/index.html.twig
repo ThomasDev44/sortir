@@ -26,30 +26,37 @@
 
         <div class="search">
             <label for="search">Le nom de la sortie contient : </label>
-            <input type="text" id="search" name="search" placeholder="search">
+            <input type="text" id="search" name="search" placeholder="search" {% if choixSearch is defined %}
+                   value="{{ choixSearch }}{% endif %}">
         </div>
         <div class="date">
 
             <label for="start">Entre </label>
-            <input type="datetime-local" id="start" name="trip-start">
+            <input type="datetime-local" id="start" name="trip-start" {% if choixDateStart is defined %}
+                   value="{{ choixDateStart }}{% endif %}">
 
             <label for="end">et </label>
-            <input type="datetime-local" id="end" name="trip-end">
-{% if choixOrganisateur is defined %}
-            {{ choixOrganisateur }}
-            {% endif %}
+            <input type="datetime-local" id="end" name="trip-end" {% if choixDateEnd is defined %}
+                   value="{{ choixDateEnd }}{% endif %}">
         </div>
         <div class="checkbox">
-            <input type="checkbox" id="organisateur" name="organisateur" value="{{ app.user.id }}">
+            <input type="checkbox" id="organisateur" name="organisateur"
+                   value="{{ app.user.id }}" {% if choixOrganisateur is defined and choixOrganisateur is not null %}
+                checked="checked" {% endif %}>
             <label for="organisateur">Sorties dont je suis l'organisateur/trice</label>
 
-            <input type="checkbox" id="inscrit" name="inscrit" value="{{ app.user.id }}">
+            <input type="checkbox" id="inscrit" name="inscrit"
+                   value="{{ app.user.id }}" {% if choixInscrit is defined and choixInscrit is not null %}
+                checked="checked" {% endif %}>
             <label for="inscrit">Sorties auxquelles je suis inscrit/e</label>
 
-            <input type="checkbox" id="pasInscrit" name="pasInscrit" value="{{ app.user.id }}">
+            <input type="checkbox" id="pasInscrit" name="pasInscrit"
+                   value="{{ app.user.id }}" {% if choixPasInscrit is defined and choixPasInscrit is not null %}
+                checked="checked" {% endif %}>
             <label for="pasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
 
-            <input type="checkbox" id="passee" name="passee" value="Passée">
+            <input type="checkbox" id="passee" name="passee" value="Passée" {% if choixPassee is defined  and choixPassee is not null%}
+                checked="checked" {% endif %}>
             <label for="passee">Sorties passées</label>
         </div>
         <button type="submit" value="submit">Rechercher</button>

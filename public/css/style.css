@@ -3,19 +3,14 @@
     height: 200px;
     border: 1px solid black;
 }
-.sortie-table{
+
+.sortie-table {
     table-layout: auto;
     width: 100%;
 }
+
 tr, td {
     border: solid;
-}
-
-td {
-    border: 1px solid blue;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 /*// Smallest device*/
