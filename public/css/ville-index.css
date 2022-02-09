@@ -14,7 +14,7 @@
 }
 
 .custom-table {
-    min-width: 900px; }
+    min-width: 600px; }
 .custom-table thead tr, .custom-table thead th {
     border-top: none;
     border-bottom: none !important; }
