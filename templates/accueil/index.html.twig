@@ -1,22 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
 
 {% block body %}
-    {% if choixSite is defined %}
-        {{ choixSite }}
-        {{ choixSearch }}
-        {{ choixDateStart }}
-        {{ choixDateEnd }}
-        {{ choixOrganisateur }}
-    {% endif %}
+
     <form action="{{ path('main_recherche') }}" method="post">
         <h4>Filtrer les sorties</h4>
         <div class="select">
             <label for="sites-select">Site :</label>
-            <select name="sites" id="sites-select">
+            <select name="sites-select" id="sites-select">
+                <option value="Tous">Tous les sites</option>
                 {% for eachSite in sites %}
-                    <option value="{{ eachSite.nom }}">{{ eachSite.nom }}</option>
+                    <option value="{{ eachSite.nom }}" {% if (leSite is defined) and (leSite == eachSite.nom) %} selected="selected" {% endif %}>{{ eachSite.nom }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -50,7 +48,7 @@
         <button type="submit" value="submit">Rechercher</button>
     </form>
     <div class="container-table">
-        <table>
+        <table class="sortie-table">
             <tr>
                 <th>Nom de la sortie</th>
                 <th>Date de la sortie</th>
@@ -61,43 +59,49 @@
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
-            <tr>
-                {% for eachSortie in sorties %}
-                    <td>{{ eachSortie.nom }}</td>
-                    <td>{{ eachSortie.dateHeureDebut }}</td>
-                    <td>{{ eachSortie.dateLimiteInscription }}</td>
-                    <td>{{ eachSortie.etat.libelle }}</td>
-                    {% set isInscrit = false %}
-                    {% for eachParticipant in eachsortie.participants %}
-                        {% if eachParticipant.username == app.user.userIdentifier %}
-                            {% set isInscrit = true %}
-                        {% endif %}
-                    {% endfor %}
 
+            {% for eachSortie in sorties %}
+            <tr>
+                <td>{{ eachSortie.nom }}</td>
+                <td>{{ eachSortie.dateHeureDebut.format('d/m/Y h:m') }}</td>
+                <td>{{ eachSortie.dateLimiteInscription.format('d/m/Y') }}</td>
+                <td>{{ eachSortie.participants|length }}/{{ eachSortie.nbInscriptionsMax }}</td>
+                <td>{{ eachSortie.etat.libelle }}</td>
+                {% set isInscrit = false %}
+                {% for eachParticipant in eachSortie.participants %}
+                    {% if eachParticipant.username == app.user.userIdentifier %}
+                        {% set isInscrit = true %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if isInscrit == true %}
+                    <td>x</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ eachSortie.organisateur }}</td>
+                {% set isOrganisateur = false %}
+                {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
+                    {% set isOrganisateur = true %}
+                {% endif %}
+                <td>
+                    {% if eachSortie.etat != 'Créée' %}
+                        <a href="{{ path('main_accueil') }}">Afficher</a>
+                    {% endif %}
+                    {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
+                        <a href="{{ path('main_accueil') }}">Modifier - </a>
+                        <a href="{{ path('main_accueil') }}">Publier</a>
+                    {% endif %}
+                    {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
+                        <a href="{{ path('main_accueil') }}"> - Annuler</a>
+                    {% endif %}
                     {% if isInscrit == true %}
-                        <td>x</td>
-                    {% else %}
-                        <td></td>
+                        <a href="{{ path('main_accueil') }}"> - Se désister</a>
                     {% endif %}
-                    <td>{{ eachSortie.organisateur.nom }}</td>
-                    {% set isOrganisateur = false %}
-                    {% if eachsortie.organisateur.username == app.user.userIdentifier %}
-                        {% set isOrganisateur = true %}
+                    {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
+                        <a href="{{ path('main_accueil') }}"> - S'inscrire</a>
                     {% endif %}
-                    <td>
-                        {% if eachSortie.etat != 'Créée' %}
-                            <a href="{{ path('') }}">Afficher</a>
-                        {% elseif (eachSortie.etat == 'Créee') and (isOrganisateur == true) %}
-                            <a href="{{ path('') }}">Modifier - </a>
-                            <a href="{{ path('') }}">Publier</a>
-                        {% elseif  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
-                            <a href="{{ path('') }}"> - Annuler</a>
-                        {% elseif isInscrit == true %}
-                            <a href="{{ path('') }}"> - Se désister</a>
-                        {% elseif (isInscrit == false) and (eachSortie.etat == 'Ouverte') %}
-                            <a href="{{ path('') }}"> - S'inscrire</a>
-                        {% endif %}
-                    </td>
+                </td>
                 {% endfor %}
             </tr>
         </table>

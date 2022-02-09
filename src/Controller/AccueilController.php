@@ -34,7 +34,7 @@ class AccueilController extends AbstractController
     ): Response
 
     {
-        $choixSite = $request->request->get('sites');
+        $choixSite = $request->request->get('sites-select');
         $choixSearch = $request->request->get('search');
         $choixDateStart = $request->request->get('trip-start');
         $choixDateEnd = $request->request->get('trip-end');
@@ -42,11 +42,20 @@ class AccueilController extends AbstractController
         $choixInscrit = $request->request->get('inscrit');
         $choixPasInscrit = $request->request->get('pasInscrit');
         $choixPassee = $request->request->get('passee');
-        $sorties = $sortieRepository->findAll();
+
+        if ($choixSite == 'Tous') {
+            $sorties = $sortieRepository->findAll();
+        } else {
+            $leSite = $siteRepository->findOneBy(['nom' => $choixSite]);
+            $sorties = $sortieRepository->findBy(['site' => $leSite]);
+        }
+
+        $leSite = $choixSite;
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
             "sorties" => $sorties,
             "sites" => $sites,
+            "leSite" => $leSite,
         ]);
     }
 
