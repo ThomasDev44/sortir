@@ -24,17 +24,9 @@ class ConnexionController extends AbstractController
         //récupérer bouton name
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $checkboxInput = $request->request->get("remember_me");
-//        if ($checkboxInput != null) {
-            $lastUsername = $request->cookies->get('cookieUsername');
-            dump('cookieUsername');
-//        } else {
-//            $lastUsername = '';
-//        }
 
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', ['error' => $error]);
     }
 
     /**

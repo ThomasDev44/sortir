@@ -62,7 +62,7 @@ class AccueilController extends AbstractController
             $sorties = $sortieRepository->selectSortiesAvecFiltres($leSiteId, $choixSearch, $choixDateStart, $choixDateEnd,
                 $choixOrganisateur, $choixInscrit, $choixPasInscrit, $choixPassee);
         }
-
+        $response = new Response();
 
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [

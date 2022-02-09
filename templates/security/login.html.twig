@@ -10,14 +10,13 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% endif %}
-
     <h1 class="h3 mb-3 font-weight-normal">Veuillez vous identifier</h1>
     <form method="post" action="{{ path('app_login') }}">
     <label for="inputUsername">Identifiant :</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
+    <input type="text" value="{{app.request.cookies.get('cookieUsername')}}" name="username" id="inputUsername" class="form-control"
            autocomplete="username" required autofocus>
     <label for="inputPassword">Mot de passe :</label>
     <input type="password" name="password" id="inputPassword" class="form-control"
