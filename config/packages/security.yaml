@@ -8,7 +8,7 @@ security:
 
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
-    # used to reload user from session & other features (e.g. switch_user)
+  # used to reload user from session & other features (e.g. switch_user)
     app_user_provider:
       entity:
         class: App\Entity\Participant
@@ -24,11 +24,10 @@ security:
       logout:
         path: app_logout
         target: app_login
-
-    #remember_me:
-    #    secret: '%kernel.secret%'
-    #    lifetime: 604800 # 1 week in seconds
-     #   path: /login
+      remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 604800 # 1 week in seconds
+        path: /login
         #token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
 
