@@ -2,7 +2,6 @@ body{
     color: white;
 
 }
-
 .btn-ghost {
     color: white;
     background: #93af58;
@@ -11,6 +10,30 @@ body{
     border-color: white;
     border-style: solid;
     border-width: 1px;
+    margin: 5px 5px 5px 5px;
+}
+
+.table_css{
+    border-color: white;
+    border-style: solid;
+    border-width: 0.5px;
+    overflow: scroll;
+}
+
+th {
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .btn-ghost:hover {
@@ -19,74 +42,6 @@ body{
 tbody{
 
 }
-div.scroll-table{
-    overflow-y:scroll;
-}
-.custom-table {
-    min-width: 600px;
-
-}
-.custom-table thead tr, .custom-table thead th {
-    color: white;
-    border-top: none;
-    border-bottom-color: white;
-
-}
-.custom-table tbody th, .custom-table tbody td {
-    color: white;
-    font-weight: 400;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    font-weight: 300; }
-.custom-table tbody th small, .custom-table tbody td small {
-    color: #b3b3b3;
-    font-weight: 300; }
-.custom-table tbody .persons {
-    padding: 0;
-    margin: 0; }
-.custom-table tbody .persons li {
-    padding: 0;
-    margin: 0 0 0 -15px;
-    list-style: none;
-    display: inline-block; }
-.custom-table tbody .persons li a {
-    display: inline-block;
-    width: 36px; }
-.custom-table tbody .persons li a img {
-    border-radius: 50%;
-    max-width: 100%; }
-.custom-table tbody tr th, .custom-table tbody tr td {
-    position: relative;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease; }
-.custom-table tbody tr th:before, .custom-table tbody tr th:after, .custom-table tbody tr td:before, .custom-table tbody tr td:after {
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
-    content: "";
-    left: 0;
-    right: 0;
-    position: absolute;
-    height: 1px;
-    background: #bfbfbf;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden; }
-.custom-table tbody tr th:before, .custom-table tbody tr td:before {
-    top: -1px; }
-.custom-table tbody tr th:after, .custom-table tbody tr td:after {
-    bottom: -1px; }
-.custom-table tbody tr:hover th, .custom-table tbody tr:hover td {
-    background: rgba(0, 0, 0, 0.03); }
-.custom-table tbody tr:hover th:before, .custom-table tbody tr:hover th:after, .custom-table tbody tr:hover td:before, .custom-table tbody tr:hover td:after {
-    opacity: 1;
-    visibility: visible; }
-.custom-table tbody tr.active th, .custom-table tbody tr.active td {
-    background: rgba(0, 0, 0, 0.03); }
-.custom-table tbody tr.active th:before, .custom-table tbody tr.active th:after, .custom-table tbody tr.active td:before, .custom-table tbody tr.active td:after {
-    opacity: 1;
-    visibility: visible; }
 
 form {
     display: inline;
