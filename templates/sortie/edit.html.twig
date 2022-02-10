@@ -7,8 +7,12 @@
 
     {{ form_start(formSortie) }}
     {{ form_widget(formSortie) }}
+    <button class="btn-primary">Enregistrer</button>
     {{ form_end(formSortie) }}
-    <a href="{{ path('sortie_index') }}">back to list</a>
 
-    {{ include('sortie/_delete_form.html.twig') }}
+    <a href="{{ path('main_publier', {'idSortie': sortie.id }) }}" class="btn-primary">Publier la sortie</a>
+    <a href="{{ path('main_supprimer', {'idSortie' : sortie.id}) }}" class="btn-primary">Supprimer la sortie</a>
+    <a href="{{ path('main_accueil') }}" class="btn-primary">Annuler</a>
+
+
 {% endblock %}

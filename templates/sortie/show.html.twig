@@ -46,7 +46,7 @@
     <div class="infosDroite">
     <div class="villeOrganisatrice">
         <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
-        <p class="resultatVilleOrganisatrice">{{ sortie.lieu.ville.nom }}</p>
+        <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
     </div>
 
     <div class="lieu">
@@ -93,7 +93,7 @@
                 </tr>
                 {% for eachParticipant in sortie.participants %}
                     <tr>
-                        <td>{{ eachParticipant.username }}</td>
+                        <td>{{ eachParticipant.userIdentifier }}</td>
                         <td>{{ eachParticipant.prenom }} {{ eachParticipant.nom|upper }}</td>
                     </tr>
                 {% endfor %}

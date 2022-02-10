@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +26,26 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository, EtatRepository $etatRepository, SiteRepository $siteRepository, SortieRepository $sortieRepository): Response
     {
+
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $sorties = $sortieRepository->findAll();
+            $sites = $siteRepository->findAll();
+            $sortie->setOrganisateur($participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]));
+            $sortie->setEtat($etatRepository->findOneBy(['libelle' => 'Créée']));
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('main_accueil', [
+                "sorties" => $sorties,
+                "sites" => $sites,
+
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('sortie/new.html.twig', [
@@ -71,7 +83,7 @@ class SortieController extends AbstractController
     #[Route('/{id}', name: 'sortie_delete', methods: ['POST'])]
     public function delete(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $entityManager->remove($sortie);
             $entityManager->flush();
         }

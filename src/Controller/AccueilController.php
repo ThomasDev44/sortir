@@ -255,8 +255,28 @@ class AccueilController extends AbstractController
         }
         return $this->render('sortie/edit.html.twig', [
             'formSortie' => $form->createView(),
-            'sortie' =>$laSortie,
+            'sortie' => $laSortie,
         ]);
     }
+
+    #[Route('/supprimer/{idSortie}', name: 'supprimer')]
+    public function supprimer($idSortie,
+                              SortieRepository $sortieRepository,
+                              EntityManagerInterface $entityManager,
+                              SiteRepository $siteRepository,
+    ): Response
+    {
+        $sites = $siteRepository->findAll();
+        $sorties = $sortieRepository->findAll();
+        $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
+        $entityManager->remove($laSortie);
+        $entityManager->flush();
+
+        return $this->render('accueil/index.html.twig', [
+            "sorties" => $sorties,
+            "sites" => $sites,
+        ]);
+    }
+
 
 }
