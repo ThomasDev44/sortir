@@ -13,11 +13,21 @@ body{
     margin: 5px 5px 5px 5px;
 }
 
+.mb-5{
+    padding-top: 40px;
+}
+.taille-table{
+    height: 500px;
+    overflow:scroll;
+}
+
 .table_css{
     border-color: white;
     border-style: solid;
     border-width: 0.5px;
-    overflow: scroll;
+    max-height: 400px;
+    height: 400px;
+
 }
 
 th {
