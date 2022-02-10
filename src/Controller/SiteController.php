@@ -93,4 +93,14 @@ class SiteController extends AbstractController
 
         return $this->redirectToRoute('site_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/rechercher', name: 'site_rechercher', methods: ['GET', 'POST'])]
+    public function rechercher(SiteRepository $siteRepository,
+                          Request $request,
+                          EntityManagerInterface $entityManager): Response
+    {
+
+
+        return $this->renderForm('site/index.html.twig', []);
+    }
 }

@@ -26,6 +26,7 @@ class RegistrationController extends AbstractController
             // encode the plain password
             $user->setAdministrateur('false');
             $user->setActif('false');
+            $user->setRoles(['ROLE_USER']);
             $user->setPassword(
             $userPasswordHasher->hashPassword(
                     $user,

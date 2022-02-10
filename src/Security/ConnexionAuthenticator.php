@@ -58,7 +58,7 @@ class ConnexionAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('test'));
+        return new RedirectResponse($this->urlGenerator->generate('main_accueil'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

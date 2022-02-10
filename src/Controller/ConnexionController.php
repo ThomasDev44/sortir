@@ -17,9 +17,9 @@ class ConnexionController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
 
-//       if ($this->getUser()) {
-//             return $this->redirectToRoute('main_accueil');
-//         }
+       if ($this->getUser()) {
+             return $this->redirectToRoute('main_accueil');
+         }
 
         //récupérer bouton name
         // get the login error if there is one

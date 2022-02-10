@@ -1,41 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Gérer les sites{% endblock %}
-{#{% block header %}#}
-{#    <link rel="stylesheet" href="{{ asset('css/ville-index.css') }}">#}
-{#{% endblock %}#}
-{#{% block body %}#}
-{#    <h1>Site index</h1>#}
-
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <th>Nom</th>#}
-{#                <th>actions</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        {% for site in sites %}#}
-{#            <tr>#}
-{#                <td>{{ site.id }}</td>#}
-{#                <td>{{ site.nom }}</td>#}
-{#                <td>#}
-{#                    <a href="{{ path('site_show', {'id': site.id}) }}">show</a>#}
-{#                    <a href="{{ path('site_edit', {'id': site.id}) }}">edit</a>#}
-{#                </td>#}
-{#            </tr>#}
-{#        {% else %}#}
-{#            <tr>#}
-{#                <td colspan="3">no records found</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-
-{#    <a href="{{ path('site_new') }}">Create new</a>#}
-{#{% endblock %}#}
-
 {% block header %}
     <link rel="stylesheet" href="{{ asset('css/ville-index.css') }}">
 {% endblock %}
@@ -43,8 +8,16 @@
     <div class="content">
         <div class="container">
             <h2 class="mb-5">Gérer les villes</h2>
-            <div class="table-responsive">
-                <table class="table custom-table">
+
+            <form action = "{{ path('site_rechercher')}}" method = "post">
+                <label name = "terme">Le nom contient :
+                    <input type = "search" name = "terme">
+                </label>
+                <input type = "submit" name = "s" value = "Rechercher">
+            </form>
+
+            <div class="">
+                <table class="">
                     <thead>
                     <tr>
                         <th scope="col">Nom</th>

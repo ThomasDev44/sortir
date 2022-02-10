@@ -9,8 +9,10 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
-
-        <link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
         <link href="{{ asset('css/navbar.css') }}" rel="stylesheet"/>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
@@ -21,55 +23,67 @@
         <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ path('main_accueil') }}">
-                    <img class="avatar-large" src="https://mickael-coconnier.fr/img/Logo/encart/logo-sortir.com.jpg" />
-                    Sortir.com
+                    <img class="" src="{{ asset('images/logo-sortir.png') }}" />
+                    <i><strong>Sortir.com</strong></i>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
+                        {% if app.user %}
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Accueil</a>
+                            <a class="nav-link " id="navlink" href="{{ path('main_accueil') }}">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                            <a class="nav-link" id="navlink" href="#">Mon profil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">S'inscrire</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Mon profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
+                            <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
                         </li>
                         <li class="nav-item dropdown">
                             <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/Sponge_bob.png') }}" />
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a>
-                                <a class="dropdown-item" href="#">Autres action</a>
+{#                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a>#}
+{#                                <a class="dropdown-item" href="#">Autres action</a>#}
                             </div>
                         </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="navlink" href="{{ path('app_login') }}">Se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="navlink" href="{{ path('app_register') }}">S'inscrire</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </div>
-
         {% block header %}
-        {% endblock %}
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    {% block body %}{% endblock %}
     </body>
+    <footer>
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <div class="footer-copyright footer-links footer-links-copyright">
+                <a href="#">© {{ "now" | date("Y") }} ENI Ecole Informatique</a>
+            </div>
+        </div>
+    </footer>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 </html>
 
