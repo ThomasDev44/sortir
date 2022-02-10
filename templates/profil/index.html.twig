@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+    <form action="{{ path('/') }}" method="get" class="form">
+        <h1>Mon profil :</h1>
+        <div class="pseudo">
+            <label for="pseudo">Pseudo :</label>
+            <input type="text" name="pseudo" id="pseudo" required>
+        </div>
+        <div class="prenom">
+            <label for="prenom">Prénom :</label>
+            <input type="text" name="prenom" id="prenom" required>
+        </div>
+        <div class="nom">
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" id="nom" required>
+        </div>
+        <div class="tel">
+            <label for="tel">Téléphone :</label>
+            <input type="text" name="tel" id="tel" required
+            placeholder="XXXXXXXXXX">
+        </div>
+        <div class="form-example">
+            <label for="email">Email : </label>
+            <input type="email" name="email" id="email" required
+            placeholder="johndoe@gmail.fr">
+        </div>
+        <div class="pwd">
+            <label for="pwd">Mot de passe :</label>
+            <input type="password" id="pwd" name="pwd" required>
+        </div>
+        <div>
+            <label for="site">Site de rattachement : :</label>
+            <select id="site" name="site" required>
+                <option selected>Nantes</option>
+                <option >Rennes</option>
+                <option>Niort</option>
+                <option>Quimper</option>
+            </select>
+        </div>
+
+        <div class="button">
+            <button name="btn"  type="submit" >Enregistrer</button>
+            <input type="submit" value="Enregistrer">
+        </div>
+        <div class="button">
+            <button name="btn"  type="submit" >Annuler</button>
+            <input type="submit" value="Annuler">
+        </div>
+    </form>
+
+
+
+
+{#<form>
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/Users/mlamacq2021/Projet/src/Controller/ProfilController.php'|file_link(0) }}">src/Controller/ProfilController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/Users/mlamacq2021/Projet/templates/profil/index.html.twig'|file_link(0) }}">templates/profil/index.html.twig</a></code></li>
+    </ul>
+    </form>#}
+{% endblock %}
