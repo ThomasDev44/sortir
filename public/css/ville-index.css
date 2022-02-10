@@ -16,22 +16,18 @@ body{
 .mb-5{
     padding-top: 40px;
 }
-.taille-table{
-    height: 500px;
-    overflow:scroll;
-}
 
 .table_css{
+    min-width: auto;
     border-color: white;
-    border-style: solid;
+    /*border-style: solid;*/
     border-width: 0.5px;
-    max-height: 400px;
-    height: 400px;
-
+    max-height: 550px;
+    overflow: auto;
 }
 
 th {
-    border-color: white;
+    /*border-color: white;*/
     border-style: solid;
     border-width: 1px;
     text-align: center;
