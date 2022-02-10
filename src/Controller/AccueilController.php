@@ -243,6 +243,7 @@ class AccueilController extends AbstractController
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
 
         $form = $this->createForm(SortieType::class, $laSortie);
+        $form->handleRequest($request);
 
 
         if ($form->isSubmitted() and $form->isValid()) {

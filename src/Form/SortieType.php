@@ -40,6 +40,7 @@ class SortieType extends AbstractType
                 'label' => 'Ville organisatrice'
             ])
             ->add('lieu');
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
