@@ -54,7 +54,7 @@ class AccueilController extends AbstractController
 
         $choixPasInscrit = filter_input(INPUT_POST, 'pasInscrit', FILTER_VALIDATE_INT);
 
-        $choixPassee = filter_input(INPUT_POST, 'pasInscrit', FILTER_SANITIZE_STRING);
+        $choixPassee = filter_input(INPUT_POST, 'passee', FILTER_SANITIZE_STRING);
 
 
         if ($choixSite != 'Tous') {
