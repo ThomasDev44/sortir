@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+         <p>{{ participant.username }}</p>
+    <p>Prenom : {{ participant.prenom }}</p>
+    <p>Nom : {{ participant.nom }}</p>
+    <p>Téléphone : {{ participant.telephone }}</p>
+    <p>Email : {{ participant.mail }}</p>
+    <p>Site de rattachement : </p>
+
+
+
+
+{% endblock %}
+
+

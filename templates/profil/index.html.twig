@@ -2,67 +2,117 @@
 
 {% block title %}Mon profil{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
 {% endblock %}
 
 
 {% block body %}
 
-    <form action="{{ path('/') }}" method="get" class="form">
-        <h1>Mon profil :</h1>
-        <div class="pseudo">
-            <label for="pseudo">Pseudo :</label>
-            <input type="text" name="pseudo" id="pseudo" required>
-        </div>
-        <div class="prenom">
-            <label for="prenom">Prénom :</label>
-            <input type="text" name="prenom" id="prenom" required>
-        </div>
-        <div class="nom">
-            <label for="nom">Nom :</label>
-            <input type="text" name="nom" id="nom" required>
-        </div>
-        <div class="tel">
-            <label for="tel">Téléphone :</label>
-            <input type="text" name="tel" id="tel" required
-            placeholder="XXXXXXXXXX">
-        </div>
-        <div class="form-example">
-            <label for="email">Email : </label>
-            <input type="email" name="email" id="email" required
-            placeholder="johndoe@gmail.fr">
-        </div>
-        <div class="pwd">
-            <label for="pwd">Mot de passe :</label>
-            <input type="password" id="pwd" name="pwd" required>
-        </div>
-        <div>
-            <label for="site">Site de rattachement : :</label>
-            <select id="site" name="site" required>
-                <option selected>Nantes</option>
-                <option >Rennes</option>
-                <option>Niort</option>
-                <option>Quimper</option>
-            </select>
-        </div>
-
-        <div class="button">
-            <button name="btn"  type="submit" >Enregistrer</button>
-            <input type="submit" value="Enregistrer">
-        </div>
-        <div class="button">
-            <button name="btn"  type="submit" >Annuler</button>
-            <input type="submit" value="Annuler">
-        </div>
-    </form>
 
 
 
+    <div class="d-flex justify-content-center ">
 
-{#<form>
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/mlamacq2021/Projet/src/Controller/ProfilController.php'|file_link(0) }}">src/Controller/ProfilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/mlamacq2021/Projet/templates/profil/index.html.twig'|file_link(0) }}">templates/profil/index.html.twig</a></code></li>
-    </ul>
-    </form>#}
+        {{ app.user.userIdentifier }}
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.username) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.username) }}
+            </div>
+            {{ form_errors(form.username) }}
+        </div>
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.prenom) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.prenom) }}
+            </div>
+            {{ form_errors(form.prenom) }}
+        </div>
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.nom) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.nom) }}
+            </div>
+            {{ form_errors(form.nom) }}
+        </div>
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.telephone) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.telephone) }}
+            </div>
+            {{ form_errors(form.telephone) }}
+        </div>
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.mail) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.mail) }}
+            </div>
+            {{ form_errors(form.mail) }}
+        </div>
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.password) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.password) }}
+            </div>
+            {{ form_errors(form.password) }}
+        </div>
+        {# <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.confirmation) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.confirmation) }}
+            </div>
+            {{ form_errors(form.confirmation) }}
+        </div> #}
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_label(form.site) }}
+            </div>
+            <div class="col-12 col-md-9">
+                {{ form_widget(form.site) }}
+            </div>
+            {{ form_errors(form.site) }}
+        </div>
+
+        <div class="form-group">
+            <div class="col col-md-7">
+                {{ form_row(form.enregistrer, {'attr' : { 'class': 'btn btn-success' }}) }}
+            </div>
+            <div class="col-12 col-md-9">
+                <a href="{{ path('main_accueil') }}" role="button" class="btn btn-danger">Annuler</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col col-md-9 text-danger">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
 {% endblock %}
