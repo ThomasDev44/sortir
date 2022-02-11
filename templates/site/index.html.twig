@@ -7,16 +7,16 @@
 {% block body %}
     <div class="content">
         <div class="container">
-            <h2 class="mb-5">Gérer les villes</h2>
-
+            <h2 class="mb-5">Gérer les sites</h2>
+            <div class="div-search">
             <form action = "{{ path('site_rechercher')}}" method = "post">
                 <label name = "terme">Le nom contient :
                     <input type = "search" name = "terme">
                 </label>
-                <input type = "submit" name = "s" value = "Rechercher">
+                <input  class="btn-ghost" type = "submit" name = "s" value = "Rechercher">
             </form>
-
-            <div class="">
+            </div>
+            <div class="table_css">
                 <table class="table_css">
                     <thead>
                     <tr>
