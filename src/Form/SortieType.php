@@ -32,11 +32,13 @@ class SortieType extends AbstractType
                 'label' => 'Nombre de places',
                 'attr' => array('min' => 1)
             ])
-            ->add('duree')
+            ->add('duree', null, [
+                'attr' => array('min' => 1)
+            ])
             ->add('InfosSortie', null, [
                 'label' => 'Description et infos'
             ])
-            ->add('site', null,[
+            ->add('site', null, [
                 'label' => 'Ville organisatrice'
             ])
             ->add('lieu');

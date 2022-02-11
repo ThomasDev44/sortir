@@ -32,20 +32,35 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
+        $erreur = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sorties = $sortieRepository->findAll();
-            $sites = $siteRepository->findAll();
-            $sortie->setOrganisateur($participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]));
-            $sortie->setEtat($etatRepository->findOneBy(['libelle' => 'Créée']));
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+            if (($sortie->getDateLimiteInscription() <= new \DateTime()) or ($sortie->getDateHeureDebut() <= $sortie->getDateLimiteInscription())) {
+                $this->addFlash('error', "Vous ne pouvez pas mettre une date inférieure à la date du jour. La date limite d'inscription doit être inférieure à la date de la sortie");
+                $erreur = true;
+            }
+            if ($sortie->getNbInscriptionsMax() <= 0) {
+                $this->addFlash('error', 'Le nombre de places doit être supérieur à 0');
+                $erreur = true;
+            }
+            if ($sortie->getDuree() <= 0) {
+                $this->addFlash('error', 'La durée doit être supérieure à 0');
+                $erreur = true;
+            }
 
-            return $this->redirectToRoute('main_accueil', [
-                "sorties" => $sorties,
-                "sites" => $sites,
+            if ($erreur == false) {
+                $sortie->setOrganisateur($participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]));
+                $sortie->setEtat($etatRepository->findOneBy(['libelle' => 'Créée']));
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                $sorties = $sortieRepository->findAll();
+                $sites = $siteRepository->findAll();
+                return $this->redirectToRoute('main_accueil', [
+                    "sorties" => $sorties,
+                    "sites" => $sites,
 
-            ], Response::HTTP_SEE_OTHER);
+                ], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('sortie/new.html.twig', [
@@ -54,31 +69,6 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie): Response
-    {
-        return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'sortie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('sortie/edit.html.twig', [
-            'sortie' => $sortie,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}', name: 'sortie_delete', methods: ['POST'])]
     public function delete(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response

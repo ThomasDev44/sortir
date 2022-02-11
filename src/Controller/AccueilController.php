@@ -2,16 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Sortie;
-use App\Form\SiteType;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
-use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -238,21 +234,37 @@ class AccueilController extends AbstractController
 
     ): Response
     {
-        $sites = $siteRepository->findAll();
-        $sorties = $sortieRepository->findAll();
+
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
 
         $form = $this->createForm(SortieType::class, $laSortie);
         $form->handleRequest($request);
+        $sites = $siteRepository->findAll();
+        $sorties = $sortieRepository->findAll();
+        $erreur = false;
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (($laSortie->getDateLimiteInscription() <= new \DateTime()) or ($laSortie->getDateHeureDebut() <= $laSortie->getDateLimiteInscription())) {
+                $this->addFlash('error', "Vous ne pouvez pas mettre une date inférieure à la date du jour. La date limite d'inscription doit être inférieure à la date de la sortie");
+                $erreur = true;
+            }
+            if ($laSortie->getNbInscriptionsMax() <= 0) {
+                $this->addFlash('error', 'Le nombre de places doit être supérieur à 0');
+                $erreur = true;
+            }
+            if ($laSortie->getDuree() <= 0) {
+                $this->addFlash('error', 'La durée doit être supérieure à 0');
+                $erreur = true;
+            }
 
-        if ($form->isSubmitted() and $form->isValid()) {
-            $entityManager->persist($laSortie);
-            $entityManager->flush();
-            return $this->render('accueil/index.html.twig', [
-                "sorties" => $sorties,
-                "sites" => $sites,
-            ]);
+            if ($erreur == false) {
+                $entityManager->persist($laSortie);
+                $entityManager->flush();
+                return $this->render('accueil/index.html.twig', [
+                    "sorties" => $sorties,
+                    "sites" => $sites,
+                ]);
+            }
         }
         return $this->render('sortie/edit.html.twig', [
             'formSortie' => $form->createView(),
@@ -267,11 +279,11 @@ class AccueilController extends AbstractController
                               SiteRepository $siteRepository,
     ): Response
     {
-        $sites = $siteRepository->findAll();
-        $sorties = $sortieRepository->findAll();
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $entityManager->remove($laSortie);
         $entityManager->flush();
+        $sites = $siteRepository->findAll();
+        $sorties = $sortieRepository->findAll();
 
         return $this->render('accueil/index.html.twig', [
             "sorties" => $sorties,
