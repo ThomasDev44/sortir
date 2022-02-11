@@ -12,12 +12,12 @@
 {% block body %}
 
 
-         <p>{{ participant.username }}</p>
+    <p>{{ participant.username }}</p>
     <p>Prenom : {{ participant.prenom }}</p>
     <p>Nom : {{ participant.nom }}</p>
     <p>Téléphone : {{ participant.telephone }}</p>
     <p>Email : {{ participant.mail }}</p>
-    <p>Site de rattachement : </p>
+    <p>Site de rattachement : {{ participant.site.nom }} </p>
 
 
 

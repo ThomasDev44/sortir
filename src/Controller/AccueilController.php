@@ -35,7 +35,6 @@ class AccueilController extends AbstractController
     #[Route('/recherche', name: 'recherche')]
     public function rechercheParFiltre(SiteRepository   $siteRepository,
                                        SortieRepository $sortieRepository,
-                                       Request          $request,
     ): Response
 
     {
