@@ -3,5 +3,10 @@
     flex-direction: row;
     margin-block: 25px;
     font-weight: bold;
+    color: white;
+}
+
+#blabla {
+    color: black;
 }
 
