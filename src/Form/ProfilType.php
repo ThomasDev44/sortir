@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,15 +34,17 @@ class ProfilType extends AbstractType
             ->add('mail', EmailType::class, [
                 'label' => 'Email :'
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe :'
-            ])
-            /*->add('confirmation', TextType::class, [
-                'label' => 'Confirmation :'
-            ])*/
+            ->add('password', RepeatedType::class, array(
+                'type'              => PasswordType::class,
+                'label'             => 'Password : ',
+                'mapped'            => false,
+                'first_options'     => array('label' => 'Mot de passe : '),
+                'second_options'    => array('label' => 'Confirmation : '),
+                'invalid_message' => 'Le mot de passe doit être identique',
+            ))
             ->add('site', EntityType::class, [
                 'label' => 'Site de rattachement :',
-                'class' => Site::class
+                'class' => Site::class,
             ])
             ->add('enregistrer', SubmitType::class, [
                 'attr' => ['class' => 'enregistrer'],

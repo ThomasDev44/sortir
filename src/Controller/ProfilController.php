@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Entity\Site;
 use App\Form\ProfilType;
-use App\Form\SiteType;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfilController extends AbstractController
 {
@@ -41,65 +42,48 @@ class ProfilController extends AbstractController
     public function update(
         Request                $request,
                                $id,
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $userPasswordHasher,
+        Participant            $participant,
+        ParticipantRepository  $participantRepository)
     {
         $participant = $this->getUser();
 
         $form = $this->createForm(ProfilType::class, $participant);
         $form->handleRequest($request);
 
+        /*dd(filter_input(INPUT_POST, 'verifpass', FILTER_SANITIZE_STRING));*/
 
-        if ($form->isSubmitted()
-            && $form->isValid()
-        ) {
-            $entityManager->persist($participant);
-            $entityManager->flush();
-            $this->addFlash('bravo', 'Votre profil a été modifié');
-            /*return $this->redirectToRoute('main_accueil', ['id' => $participant->getId()]);*/
+            if ($form->isSubmitted()
+                && $form->isValid()
+            ) {
+                /* //est ce que le pseudo est unique
+                 //utilisation d'une méthode que nous allons ajouter au repository
+                 if($participantRepository->findOneByPseudo($participant->getPseudo()) != null)
+                 {// s'il ne l'est pas, on renvoie vers la page de création d'utilisateur avec une notification
+                     return $this->render('profil/index.html.twig', [
+                         'participant' => $participant,
+                         'form'        => $form->createView(),
+                         'message'     => "Ce pseudo est déjà utilisé, merci d'en changer"
+                     ]);
+                 }*/
+
+                $participant->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $participant,
+                        $form->get('password')->getData()
+                    )
+                );
+
+                $entityManager->persist($participant);
+                $entityManager->flush();
+                $this->addFlash('bravo', 'Votre profil a été modifié');
+                /*return $this->redirectToRoute('main_accueil', ['id' => $participant->getId()]);*/
+            }
+
+            return $this->renderForm('profil/index.html.twig',
+                compact("form") // ["monFormulaireIdee" => $monFormulaireIdee]
+            );
         }
 
-        return $this->renderForm('profil/index.html.twig',
-            compact("form") // ["monFormulaireIdee" => $monFormulaireIdee]
-        );
-    }
 }
-    /*$form = $this->createFormBuilder()
-        ->add('username', TextType::class, [
-            'label' => 'Pseudo : '
-        ])
-        ->add('prenom', TextType::class, [
-            'label' => 'Prénom : '
-        ])
-        ->add('nom', TextType::class, [
-            'label' => 'Nom : '
-        ])
-        ->add('telephone', TextType::class, [
-            'label' => 'Téléphone : '
-        ])
-        ->add('mail', TextType::class, [
-            'label' => 'Email : '
-        ])
-        ->add('password', TextType::class, [
-            'label' => 'Mot de passe : '
-            ])
-        ->add('confirmation', TextType::class, [
-            'label' => 'Confirmation : '
-        ])
-        ->add('site', EntityType::class, [
-            'label' => 'Site de rattachement : ',
-            'class' => Site::class
-        ])
-        ->add('enregistrer', SubmitType::class, [
-            'attr' => ['class' => 'enregistrer'],
-        ])
-        ->getForm();
-
-    if($request->isMethod('post')){
-        return new JsonResponse($request->request->all());
-    }
-
-
-    return $this->render('profil/index.html.twig',
-    array('form'=>$form->createView()));
-}*/
-

@@ -35,6 +35,19 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    /**
+     * Cette méthode va nous permettre de récupérer un utilisateur via son pseudo
+     */
+    public function findOneByPseudo($value): ?Participant
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.username = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 //test
 
     // /**
@@ -65,4 +78,5 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         ;
     }
     */
+
 }
