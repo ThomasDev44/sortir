@@ -1,14 +1,12 @@
-body, html{height:100%;}
 
-body{
-    background-image: url("../images/bg.png");
+body {
+    background-image: url("../images/bg.svg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
     background-size: cover;
     min-height: 100%;
-    min-width: 1024px;
-    text-align:center;
+    text-align: center;
     /* On indique un redimensionnement proportionnel */
     width: 100%;
     height: auto;
@@ -17,19 +15,16 @@ body{
     top: 0;
     left: 0;
 }
-.container-table {
-    display: inline-block;
-    height: 200px;
-    border: 1px solid black;
+
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 330px;
+    overflow: auto;
 }
 
-.sortie-table {
-    table-layout: auto;
-    width: 100%;
-}
-
-tr, td {
-    border: solid;
+.table-wrapper-scroll-y {
+    display: block;
 }
 
 .footer {
@@ -37,19 +32,20 @@ tr, td {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: rgba(0,0,0,0.3);
-    position:absolute;
-    bottom:0;
-    width:100%;
-    padding-top:0px;
+    color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 0;
     padding-left: 10px;
-    height:40px;
+    height: 40px;
 }
 
 .footer-links {
     display: flex;
     align-items: center;
 }
+
 .footer-links a {
     color: #011f39;
     opacity: 0.15;
@@ -57,20 +53,35 @@ tr, td {
     font-size: 24px;
     padding: 0px 10px;
 }
+
 .footer-links a:hover {
     opacity: 1;
     color: #011f39;
 }
 
-.footer-links-copyright  a {
+.footer-links-copyright a {
     color: #011f39;
     opacity: 0.15;
     text-decoration: none;
     font-size: 14px;
     padding: 0px 10px;
 }
+
 .footer-links-copyright a:hover {
     opacity: 1;
     color: #011f39;
 }
+
+input, select, button {
+    color: black;
+}
+.mx-custom-rechercher{
+    margin-right: 9rem !important;
+    margin-left: 9rem !important;
+}
+
+* {
+    color: white;
+}
+
 
