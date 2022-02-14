@@ -3,84 +3,135 @@
 {% block title %}Sortie{% endblock %}
 
 {% block stylesheets %}
-
-    <link rel="stylesheet" href="{{ asset('css/afficherSortieStyle.css') }}">
 {% endblock %}
 {% block body %}
+    <div class="container">
 
-    {% if afficher is defined and afficher == true %}
-        <h1>Afficher une sortie</h1>
-    {% elseif annuler is defined and annuler == true %}
-        <h1>Annuler une sortie</h1>
-    {% endif %}
-    <div class="infosGauche">
-    <div class="nom">
-        <p class="labelNom">Nom de la sortie :</p>
-        <p class="resultatNom">{{ sortie.nom }}</p>
-    </div>
-    <div class="dateSortie">
-        <p class="labelDateSortie">Date et heure de la sortie :</p>
-        <p class="resultatDateSortie">{{ sortie.dateHeureDebut.format('d/m/Y h:m') }}</p>
-    </div>
-
-    {% if afficher is defined and afficher == true %}
-        <div class="dateCloture">
-            <p class="labelDateCloture">Date limite d'inscription :</p>
-            <p class="resultatDateCloture">{{ sortie.dateLimiteInscription.format('d/m/Y h:m') }}</p>
-        </div>
-        <div class="nbDePlaces">
-            <p class="labelNbDePlaces">Nombre de places :</p>
-            <p class="resultatNbDePlaces">{{ sortie.nbInscriptionsMax }}</p>
-        </div>
-        <div class="duree">
-            <p class="labelDuree">Durée :</p>
-            <p class="resultatDuree">{{ sortie.duree }} minutes</p>
-        </div>
-        <div class="descriptionEtInfos">
-            <p class="labelDescriptionEtInfos">Description et infos :</p>
-            <p class="resultatDescriptionEtInfos">{{ sortie.infosSortie }}</p>
-        </div>
-        </div>
-
-    {% endif %}
-    <div class="infosDroite">
-    <div class="villeOrganisatrice">
-        <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
-        <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
-    </div>
-
-    <div class="lieu">
-        <p class="labelLieu">Lieu :</p>
-        <p class="resultatLieu">{{ sortie.lieu.nom }}</p>
-    </div>
-    {% if annuler is defined and annuler == true %}
-    <div class="motif">
-        <label for="story">Motif :</label>
-
-        <textarea id="story" name="story"
-                  rows="5" cols="33">
-</textarea>
-        <a href="{{ path('main_annuler', {'idSortie': sortie.id}) }}" class="btn btn-primary">Enregistrer</a>
-        <a href="{{ path('main_accueil')}}" class="btn btn-primary">Annuler</a>
+        {% if afficher is defined and afficher == true %}
+            <h1 class="text-center mt-5 mb-5">Afficher une sortie</h1>
+        {% elseif annuler is defined and annuler == true %}
+            <h1 class="text-center mt-5 mb-5">>Annuler une sortie</h1>
         {% endif %}
-    </div>
-    {% if afficher is defined and afficher == true %}
-        <div class="rue">
-            <p class="labelRue">Rue :</p>
-            <p class="resultatRue">{{ sortie.lieu.rue }}</p>
-        </div>
-        <div class="codePostal">
-            <p class="labelCodePostal">Code postal :</p>
-            <p class="resultatCodePostal">{{ sortie.lieu.ville.codePostal }}</p>
-        </div>
-        <div class="latitude">
-            <p class="labelLatitude">Latitude :</p>
-            <p class="resultatLatitude">{{ sortie.lieu.latitude }}</p>
-        </div>
-        <div class="longitude">
-            <p class="labelLongitude">Lieu :</p>
-            <p class="resultatLongitude">{{ sortie.lieu.longitude }}</p>
-        </div>
+        <div class="row">
+            <div class="col-xl-6">
+
+                <div class="nom">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="resultatNom">Nom de la sortie :</label>
+                        </div>
+                        <div class="col-8">
+                            <p id="resultatNom">{{ sortie.nom }}</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="dateSortie">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="resultatDateSortie">Date et heure de la sortie :</label>
+                        </div>
+                        <div class="col-8">
+                            <p id="resultatDateSortie">{{ sortie.dateHeureDebut.format('d/m/Y h:m') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% if afficher is defined and afficher == true %}
+                <div class="dateCloture">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="resultatDateCloture">Date limite d'inscription :</label>
+                        </div>
+                        <div class="col-8">
+                            <p id="resultatDateCloture">{{ sortie.dateLimiteInscription.format('d/m/Y h:m') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nbDePlaces">
+                    <div class="row">
+                        <div class="col-4">
+
+                            <label for="resultatNbDePlaces">Nombre de places :</label>
+
+                        </div>
+                        <div class="col-8">
+
+                            <p id="resultatNbDePlaces">{{ sortie.nbInscriptionsMax }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="duree">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="resultatDuree">Durée :</label>
+                </div>
+                        <div class="col-8">
+
+                    <p class="resultatDuree">{{ sortie.duree }} minutes</p>
+                </div>
+                </div>
+                </div>
+
+                <div class="descriptionEtInfos">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="resultatNbDePlaces">Description et infos :</label>
+                        </div>
+                        <div class="col-8">
+                            <p class="resultatDescriptionEtInfos">{{ sortie.infosSortie }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% endif %}
+            <div class="col-xl-6">
+
+                <div class="infosDroite">
+                    <div class="villeOrganisatrice">
+                        <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
+                        <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
+                    </div>
+
+                    <div class="lieu">
+                        <p class="labelLieu">Lieu :</p>
+                        <p class="resultatLieu">{{ sortie.lieu.nom }}</p>
+                    </div>
+                    {% if annuler is defined and annuler == true %}
+                    <div class="motif">
+                        <label for="story">Motif :</label>
+
+                        <textarea id="story" name="story"
+                                  rows="5" cols="33">
+</textarea>
+                        <a href="{{ path('main_annuler', {'idSortie': sortie.id}) }}" class="btn btn-primary">Enregistrer</a>
+                        <a href="{{ path('main_accueil') }}" class="btn btn-primary">Annuler</a>
+                        {% endif %}
+                    </div>
+                    {% if afficher is defined and afficher == true %}
+                    <div class="rue">
+                        <p class="labelRue">Rue :</p>
+                        <p class="resultatRue">{{ sortie.lieu.rue }}</p>
+                    </div>
+                    <div class="codePostal">
+                        <p class="labelCodePostal">Code postal :</p>
+                        <p class="resultatCodePostal">{{ sortie.lieu.ville.codePostal }}</p>
+                    </div>
+                    <div class="latitude">
+                        <p class="labelLatitude">Latitude :</p>
+                        <p class="resultatLatitude">{{ sortie.lieu.latitude }}</p>
+                    </div>
+                    <div class="longitude">
+                        <p class="labelLongitude">Lieu :</p>
+                        <p class="resultatLongitude">{{ sortie.lieu.longitude }}</p>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
         <div class="container-table">
@@ -99,5 +150,7 @@
                 {% endfor %}
             </table>
         </div>
-    {% endif %}
+        {% endif %}
+
+    </div>
 {% endblock %}

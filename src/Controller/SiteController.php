@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('admin/site')]
 class SiteController extends AbstractController
 {
+
     #[Route('/', name: 'site_index', methods: ['GET', 'POST'])]
     public function index(SiteRepository $siteRepository,
                             Request $request,
@@ -32,6 +33,33 @@ class SiteController extends AbstractController
 
         return $this->renderForm('site/index.html.twig', [
             'sites' => $siteRepository->findAll(),
+            'site' => $site,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/rechercheParNom', name: 'site_recherche_nom')]
+    public function rechercheParSite(SiteRepository $siteRepository,
+                                     Request $request,
+                                     EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $terme = $request->get('terme');
+        $site = new Site();
+        $form = $this->createForm(SiteType::class, $site);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($site);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('site_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        $sites = $siteRepository->rechercheSiteParNom($terme);
+
+        return $this->renderForm('site/index.html.twig', [
+            'sites' => $sites,
             'site' => $site,
             'form' => $form,
         ]);
@@ -94,13 +122,7 @@ class SiteController extends AbstractController
         return $this->redirectToRoute('site_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/rechercher', name: 'site_rechercher', methods: ['GET', 'POST'])]
-    public function rechercher(SiteRepository $siteRepository,
-                          Request $request,
-                          EntityManagerInterface $entityManager): Response
-    {
-
-
-        return $this->renderForm('site/index.html.twig', []);
-    }
 }
+
+
+
