@@ -32,11 +32,11 @@
         <div class="date">
 
             <label for="start">Entre </label>
-            <input type="datetime-local" id="start" name="trip-start" {% if choixDateStart is defined %}
+            <input type="date" id="start" name="trip-start" {% if choixDateStart is defined %}
                    value="{{ choixDateStart }}{% endif %}">
 
             <label for="end">et </label>
-            <input type="datetime-local" id="end" name="trip-end" {% if choixDateEnd is defined %}
+            <input type="date" id="end" name="trip-end" {% if choixDateEnd is defined %}
                    value="{{ choixDateEnd }}{% endif %}">
         </div>
         <div class="checkbox">
@@ -55,11 +55,12 @@
                 checked="checked" {% endif %}>
             <label for="pasInscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
 
-            <input type="checkbox" id="passee" name="passee" value="Passée" {% if choixPassee is defined  and choixPassee is not null%}
+            <input type="checkbox" id="passee" name="passee"
+                   value="Passée" {% if choixPassee is defined  and choixPassee is not null %}
                 checked="checked" {% endif %}>
             <label for="passee">Sorties passées</label>
         </div>
-        <button type="submit" value="submit">Rechercher</button>
+        <button type="submit" value="submit" name="ok">Rechercher</button>
     </form>
     <div class="container-table">
         <table class="sortie-table">
@@ -102,25 +103,25 @@
                 {% endif %}
                 <td>
                     {% if eachSortie.etat != 'Créée' %}
-                        <a href="{{ path('main_accueil') }}">Afficher</a>
+                        <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}">Afficher</a>
                     {% endif %}
                     {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
-                        <a href="{{ path('main_accueil') }}">Modifier - </a>
-                        <a href="{{ path('main_accueil') }}">Publier</a>
+                        <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}">Modifier - </a>
+                        <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}">Publier</a>
                     {% endif %}
                     {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
-                        <a href="{{ path('main_accueil') }}"> - Annuler</a>
+                        <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"> - Annuler</a>
                     {% endif %}
                     {% if isInscrit == true %}
-                        <a href="{{ path('main_accueil') }}"> - Se désister</a>
+                        <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"> - Se désister</a>
                     {% endif %}
                     {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
-                        <a href="{{ path('main_accueil') }}"> - S'inscrire</a>
+                        <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"> - S'inscrire</a>
                     {% endif %}
                 </td>
                 {% endfor %}
             </tr>
         </table>
     </div>
-    <button><a href="{{ path('main_accueil') }}"></a>Créer une sortie</button>
+    <a href="{{ path('sortie_new') }}" class="btn-primary">Créer une sortie</a>
 {% endblock %}
