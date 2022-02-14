@@ -1,5 +1,5 @@
-body.container-login100{
-    background-image: url("../images/bg.png");
+body.container-login100 {
+    background-image: url("../images/bg.svg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
@@ -52,7 +52,7 @@ a:hover {
 }
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
@@ -86,25 +86,69 @@ textarea:focus, input:focus {
     color: white;
 }
 
-input:focus::-webkit-input-placeholder { color: white;; }
-input:focus:-moz-placeholder { color: white; }
-input:focus::-moz-placeholder { color: white; }
-input:focus:-ms-input-placeholder { color: white; }
+input:focus::-webkit-input-placeholder {
+    color: white;;
+}
 
-textarea:focus::-webkit-input-placeholder { color:#adadad; }
-textarea:focus:-moz-placeholder { color:#adadad; }
-textarea:focus::-moz-placeholder { color:#adadad; }
-textarea:focus:-ms-input-placeholder { color:#adadad; }
+input:focus:-moz-placeholder {
+    color: white;
+}
 
-input::-webkit-input-placeholder { color: #adadad;}
-input:-moz-placeholder { color: #adadad;}
-input::-moz-placeholder { color: #adadad;}
-input:-ms-input-placeholder { color: #adadad;}
+input:focus::-moz-placeholder {
+    color: white;
+}
 
-textarea::-webkit-input-placeholder { color: #adadad;}
-textarea:-moz-placeholder { color: #adadad;}
-textarea::-moz-placeholder { color: #adadad;}
-textarea:-ms-input-placeholder { color: #adadad;}
+input:focus:-ms-input-placeholder {
+    color: white;
+}
+
+textarea:focus::-webkit-input-placeholder {
+    color: #adadad;
+}
+
+textarea:focus:-moz-placeholder {
+    color: #adadad;
+}
+
+textarea:focus::-moz-placeholder {
+    color: #adadad;
+}
+
+textarea:focus:-ms-input-placeholder {
+    color: #adadad;
+}
+
+input::-webkit-input-placeholder {
+    color: #adadad;
+}
+
+input:-moz-placeholder {
+    color: #adadad;
+}
+
+input::-moz-placeholder {
+    color: #adadad;
+}
+
+input:-ms-input-placeholder {
+    color: #adadad;
+}
+
+textarea::-webkit-input-placeholder {
+    color: #adadad;
+}
+
+textarea:-moz-placeholder {
+    color: #adadad;
+}
+
+textarea::-moz-placeholder {
+    color: #adadad;
+}
+
+textarea:-ms-input-placeholder {
+    color: #adadad;
+}
 
 /*---------------------------------------------*/
 button {
@@ -176,6 +220,7 @@ iframe {
     line-height: 1.2;
     text-align: center;
 }
+
 .login100-form-title i {
     font-size: 30px;
     padding-bottom: 50px;
