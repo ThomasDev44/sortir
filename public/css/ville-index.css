@@ -22,7 +22,7 @@ body{
     border-color: white;
     border-width: 0.5px;
     max-height: 350px;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 .div-search{
