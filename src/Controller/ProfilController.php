@@ -32,7 +32,7 @@ class ProfilController extends AbstractController
     ): Response
     {
         return $this->render('profil/detail.html.twig',
-            compact("participant")
+            compact('participant')
         );
     }
 

@@ -38,6 +38,33 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[Route('/rechercheParNom', name: 'ville_recherche_nom')]
+    public function rechercheParSite(VilleRepository $villeRepository,
+                                     Request $request,
+                                     EntityManagerInterface $entityManager,
+    ): Response
+    {
+        $terme = $request->get('terme');
+        $ville = new Ville();
+        $form = $this->createForm(VilleType::class, $ville);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('ville_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        $villes = $villeRepository->rechercheVilleParNom($terme);
+
+        return $this->renderForm('ville/index.html.twig', [
+            'villes' => $villes,
+            'ville' => $ville,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/ajouter', name: 'ville_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

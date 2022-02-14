@@ -19,7 +19,18 @@ class SiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Site::class);
     }
 
-    // /**
+    public function rechercheSiteParNom($terme)
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb
+            ->andWhere('s.nom LIKE :termeSearch')
+            ->setParameter('termeSearch', '%' . $terme . '%');
+
+        $requete = $qb->getQuery();
+        return $requete->execute();
+    }
+
+        // /**
     //  * @return Site[] Returns an array of Site objects
     //  */
     /*
