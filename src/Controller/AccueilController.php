@@ -94,27 +94,36 @@ class AccueilController extends AbstractController
                              EntityManagerInterface $entityManager,
     ): Response
     {
+        $erreur = false;
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $dateNow = new \DateTime('NOW');
-        if ($laSortie->getDateLimiteInscription() >= $dateNow) {
+        if ($laSortie->getDateLimiteInscription() < $dateNow) {
+            $this->addFlash('error', 'La date de clôture est passée');
+            $erreur = true;
+        }
+        if ($laSortie->getNbInscriptionsMax() == $laSortie->getParticipants()->count()) {
+            $this->addFlash('error', 'La sortie est déjà complète');
+            $erreur = true;
+
+        }
+
+        if ($erreur == false) {
             $user = $this->getUser()->getUserIdentifier();
             $user = $participantRepository->findOneBy(['username' => $user]);
             $laSortie->addParticipant($user);
             $entityManager->persist($laSortie);
             $entityManager->flush();
-        } else {
-            $this->addFlash('error', 'La date de clôture est passée');
         }
+
 
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
-        return $this->render('accueil/index.html.twig', [
-            'sorties' => $sorties,
-            'sites' => $sites,
-        ]);
+        return $this->render('accueil/index.html.twig', ['sorties' => $sorties,
+            'sites' => $sites,]);
     }
 
-    #[Route('/desister/{idSortie}', name: 'desister')]
+    #[
+        Route('/desister/{idSortie}', name: 'desister')]
     public function desister($idSortie,
                              SortieRepository $sortieRepository,
                              ParticipantRepository $participantRepository,

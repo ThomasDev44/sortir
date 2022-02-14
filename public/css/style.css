@@ -43,7 +43,7 @@ tr, td {
     position:absolute;
     bottom:0;
     width:100%;
-    padding-top:0px;
+    padding-top:0px;    
     padding-left: 10px;
     height:40px;
 }
@@ -74,5 +74,8 @@ tr, td {
 .footer-links-copyright a:hover {
     opacity: 1;
     color: #011f39;
+}
+*{
+    color: white;
 }
 

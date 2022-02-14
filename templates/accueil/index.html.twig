@@ -62,66 +62,67 @@
         </div>
         <button type="submit" value="submit" name="ok">Rechercher</button>
     </form>
-    <div class="container-table">
-        <table class="sortie-table">
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
-            </tr>
+    {#    <div class="container-table"> #}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Nom de la sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">inscrits/places</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        {% for eachSortie in sorties %}
+        <tr>
+            <td>{{ eachSortie.nom }}</td>
+            <td>{{ eachSortie.dateHeureDebut.format('d/m/Y h:m') }}</td>
+            <td>{{ eachSortie.dateLimiteInscription.format('d/m/Y') }}</td>
+            <td>{{ eachSortie.participants|length }}/{{ eachSortie.nbInscriptionsMax }}</td>
+            <td>{{ eachSortie.etat.libelle }}</td>
+            {% set isInscrit = false %}
+            {% for eachParticipant in eachSortie.participants %}
+                {% if eachParticipant.username == app.user.userIdentifier %}
+                    {% set isInscrit = true %}
+                {% endif %}
+            {% endfor %}
 
-            {% for eachSortie in sorties %}
-            <tr>
-                <td>{{ eachSortie.nom }}</td>
-                <td>{{ eachSortie.dateHeureDebut.format('d/m/Y h:m') }}</td>
-                <td>{{ eachSortie.dateLimiteInscription.format('d/m/Y') }}</td>
-                <td>{{ eachSortie.participants|length }}/{{ eachSortie.nbInscriptionsMax }}</td>
-                <td>{{ eachSortie.etat.libelle }}</td>
-                {% set isInscrit = false %}
-                {% for eachParticipant in eachSortie.participants %}
-                    {% if eachParticipant.username == app.user.userIdentifier %}
-                        {% set isInscrit = true %}
-                    {% endif %}
-                {% endfor %}
-
+            {% if isInscrit == true %}
+                <td>x</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            <td>
+                <a href="{{ path('detail', {'id' : eachSortie.organisateur.id}) }}">{{ eachSortie.organisateur }}</a>
+            </td>
+            {% set isOrganisateur = false %}
+            {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
+                {% set isOrganisateur = true %}
+            {% endif %}
+            <td>
+                {% if eachSortie.etat != 'Créée' %}
+                    <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}">Afficher</a>
+                {% endif %}
+                {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
+                    <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}">Modifier - </a>
+                    <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}">Publier</a>
+                {% endif %}
+                {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
+                    <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"> - Annuler</a>
+                {% endif %}
                 {% if isInscrit == true %}
-                    <td>x</td>
-                {% else %}
-                    <td></td>
+                    <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"> - Se désister</a>
                 {% endif %}
-                <td>
-                    <a href="{{ path('detail', {'id' : eachSortie.organisateur.id}) }}">{{ eachSortie.organisateur }}</a>
-                </td>
-                {% set isOrganisateur = false %}
-                {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
-                    {% set isOrganisateur = true %}
+                {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
+                    <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"> - S'inscrire</a>
                 {% endif %}
-                <td>
-                    {% if eachSortie.etat != 'Créée' %}
-                        <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}">Afficher</a>
-                    {% endif %}
-                    {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
-                        <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}">Modifier - </a>
-                        <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}">Publier</a>
-                    {% endif %}
-                    {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
-                        <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"> - Annuler</a>
-                    {% endif %}
-                    {% if isInscrit == true %}
-                        <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"> - Se désister</a>
-                    {% endif %}
-                    {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
-                        <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"> - S'inscrire</a>
-                    {% endif %}
-                </td>
-                {% endfor %}
-            </tr>
-        </table>
-    </div>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+    {#    </div> #}
     <a href="{{ path('sortie_new') }}" class="btn-primary">Créer une sortie</a>
 {% endblock %}
