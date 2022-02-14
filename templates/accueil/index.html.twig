@@ -8,7 +8,7 @@
 {% block body %}
 
     {% for message in app.flashes('error') %}
-        <div class="alert">
+        <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
@@ -93,7 +93,9 @@
                 {% else %}
                     <td></td>
                 {% endif %}
-                <td>{{ eachSortie.organisateur }}</td>
+                <td>
+                    <a href="{{ path('detail', {'id' : eachSortie.organisateur.id}) }}">{{ eachSortie.organisateur }}</a>
+                </td>
                 {% set isOrganisateur = false %}
                 {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
                     {% set isOrganisateur = true %}

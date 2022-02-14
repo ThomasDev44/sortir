@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +26,41 @@ class SortieController extends AbstractController
     }
 
     #[Route('/new', name: 'sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository, EtatRepository $etatRepository, SiteRepository $siteRepository, SortieRepository $sortieRepository): Response
     {
+
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
+        $erreur = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+            if (($sortie->getDateLimiteInscription() <= new \DateTime()) or ($sortie->getDateHeureDebut() <= $sortie->getDateLimiteInscription())) {
+                $this->addFlash('error', "Vous ne pouvez pas mettre une date inférieure à la date du jour. La date limite d'inscription doit être inférieure à la date de la sortie");
+                $erreur = true;
+            }
+            if ($sortie->getNbInscriptionsMax() <= 0) {
+                $this->addFlash('error', 'Le nombre de places doit être supérieur à 0');
+                $erreur = true;
+            }
+            if ($sortie->getDuree() <= 0) {
+                $this->addFlash('error', 'La durée doit être supérieure à 0');
+                $erreur = true;
+            }
 
-            return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
+            if ($erreur == false) {
+                $sortie->setOrganisateur($participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]));
+                $sortie->setEtat($etatRepository->findOneBy(['libelle' => 'Créée']));
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                $sorties = $sortieRepository->findAll();
+                $sites = $siteRepository->findAll();
+                return $this->redirectToRoute('main_accueil', [
+                    "sorties" => $sorties,
+                    "sites" => $sites,
+
+                ], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('sortie/new.html.twig', [
@@ -42,36 +69,11 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie): Response
-    {
-        return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'sortie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('sortie/edit.html.twig', [
-            'sortie' => $sortie,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}', name: 'sortie_delete', methods: ['POST'])]
     public function delete(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $entityManager->remove($sortie);
             $entityManager->flush();
         }

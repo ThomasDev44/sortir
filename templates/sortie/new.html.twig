@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Sortie{% endblock %}
+{% block title %}Nouvelle sortie{% endblock %}
 
 {% block body %}
-    <h1>Create new Sortie</h1>
+    <h1>Créer une nouvelle sortie</h1>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     {{ include('sortie/_form.html.twig') }}
 
-    <a href="{{ path('sortie_index') }}">back to list</a>
+    <a href="{{ path('main_accueil') }}" class="btn-primary">Annuler</a>
 {% endblock %}

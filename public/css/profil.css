@@ -1,0 +1,7 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin-block: 25px;
+    font-weight: bold;
+}
+
