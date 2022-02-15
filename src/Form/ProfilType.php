@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProfilType extends AbstractType
 {
@@ -48,6 +50,12 @@ class ProfilType extends AbstractType
             ])
             ->add('enregistrer', SubmitType::class, [
                 'attr' => ['class' => 'enregistrer'],
+            ])
+            ->add('fichierImage', VichFileType::class, [
+                "label" => "Ajouter une image",
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
             ])
         ;
     }

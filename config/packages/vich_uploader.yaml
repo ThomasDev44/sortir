@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        images_profil:
+            inject_on_load: true
+            uri_prefix: /images/photoprofil # url de l'image
+            # endroit ou les images sont stockés physiquement dans le projet
+            upload_destination: '%kernel.project_dir%/public/images/photoprofil'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
