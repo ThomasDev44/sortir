@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+    <h1 class="text-center mt-5 mb-5">Annuler une sortie</h1>
+
+
+    <div class="nom">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-2">
+                <label for="resultatNom">Nom de la sortie :</label>
+            </div>
+            <div class="col-6">
+                <p id="resultatNom">{{ sortie.nom }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="dateSortie">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-2">
+                <label for="resultatDateSortie">Date et heure de la sortie :</label>
+            </div>
+            <div class="col-6">
+                <p id="resultatDateSortie">{{ sortie.dateHeureDebut.format('d/m/Y h:m') }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="infosDroite">
+        <div class="villeOrganisatrice">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-2">
+                    <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
+                </div>
+                <div class="col-6">
+                    <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="lieu">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-2">
+                    <p class="labelLieu">Lieu :</p>
+                </div>
+                <div class="col-6">
+                    <p class="resultatLieu">{{ sortie.lieu.nom }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="motif">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-2">
+                    <label for="story">Motif :</label>
+                </div>
+                <div class="col-6">
+                        <textarea id="story" name="story"
+                                  rows="5" cols="33">
+                        </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="mt-4"></div>
+            <div class="col-5"></div>
+            <div class="col-2">
+                <a href="{{ path('main_annuler', {'idSortie': sortie.id}) }}"
+                   class="btn btn-success btn-lg">Enregistrer</a>
+            </div>
+            <div class="col-5">
+                <a href="{{ path('main_accueil') }}" class="btn btn-success btn-lg">Annuler</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

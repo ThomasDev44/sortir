@@ -182,7 +182,7 @@ class AccueilController extends AbstractController
     {
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $annuler = true;
-        return $this->render('sortie/show.html.twig', [
+        return $this->render('sortie/annuler.html.twig', [
 
             'sortie' => $laSortie,
             'annuler' => $annuler,

@@ -1,29 +1,10 @@
-
 body {
-    background-image: url("../images/bg.svg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
-    background-size: cover;
-    min-height: 100%;
-    text-align: center;
+    background-color: #011f39 !important;
     /* On indique un redimensionnement proportionnel */
-    width: 100%;
-    height: auto;
-    /* L'image est positionnée en haut à gauche */
-    top: 0;
-    left: 0;
 }
 
-
-.my-custom-scrollbar {
-    position: relative;
-    height: 330px;
-    overflow: auto;
-}
-
-.table-wrapper-scroll-y {
-    display: block;
+.fa{
+    color: black;!important;
 }
 
 .footer {
@@ -31,48 +12,59 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding-top: 0;
+    color: rgba(0,0,0,0.3);
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding-top:0;
     padding-left: 10px;
-    height: 40px;
+    height:40px;
 }
-
 .footer-links {
     display: flex;
     align-items: center;
 }
-
 .footer-links a {
-    color: #011f39;
-    opacity: 0.15;
     text-decoration: none;
     font-size: 24px;
-    padding: 0px 10px;
+    padding: 0 10px;
+    color: #198754;
+;
 }
-
-.footer-links a:hover {
-    opacity: 1;
-    color: #011f39;
-}
-
-.footer-links-copyright a {
-    color: #011f39;
-    opacity: 0.15;
+.footer-links-copyright  a {
+    color: black;
     text-decoration: none;
     font-size: 14px;
-    padding: 0px 10px;
+    padding: 0 10px;
 }
-
 .footer-links-copyright a:hover {
     opacity: 1;
-    color: #011f39;
+    color: #198754;
 }
 
-input, select, button, option {
+.my-custom-scrollbar {
+    position: relative;
+    height: 330px;
+    overflow: auto;
+
+}
+
+.my-custom-scrollbar-participants {
+    position: relative;
+    height: 220px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+
+input, select, button, option, textarea {
     color: black;
+}
+.titre{
+    color: #212529;
 }
 
 
@@ -83,6 +75,10 @@ input, select, button, option {
 
 label {
     display: inline-block;
+}
+
+.tableParticipants {
+    max-width: 500px !important;
 }
 
 * {

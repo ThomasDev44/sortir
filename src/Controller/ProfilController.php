@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Site;
 use App\Form\ProfilType;
+use App\Form\SiteType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -87,3 +89,5 @@ class ProfilController extends AbstractController
         }
 
 }
+
+
