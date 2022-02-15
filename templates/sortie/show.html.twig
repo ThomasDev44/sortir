@@ -6,14 +6,9 @@
 {% endblock %}
 {% block body %}
     <div class="container">
-
-        {% if afficher is defined and afficher == true %}
-            <h1 class="text-center mt-5 mb-5">Afficher une sortie</h1>
-        {% elseif annuler is defined and annuler == true %}
-            <h1 class="text-center mt-5 mb-5">>Annuler une sortie</h1>
-        {% endif %}
+        <h1 class="text-center mt-5 mb-5">Afficher une sortie</h1>
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-6 col-lg-12">
 
                 <div class="nom">
                     <div class="row">
@@ -37,7 +32,6 @@
                     </div>
                 </div>
 
-                {% if afficher is defined and afficher == true %}
                 <div class="dateCloture">
                     <div class="row">
                         <div class="col-4">
@@ -67,12 +61,12 @@
                     <div class="row">
                         <div class="col-4">
                             <label for="resultatDuree">Durée :</label>
-                </div>
+                        </div>
                         <div class="col-8">
 
-                    <p class="resultatDuree">{{ sortie.duree }} minutes</p>
-                </div>
-                </div>
+                            <p class="resultatDuree">{{ sortie.duree }} minutes</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="descriptionEtInfos">
@@ -85,72 +79,104 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            {% endif %}
-            <div class="col-xl-6">
+            <div class="col-xl-6 col-lg-12">
 
                 <div class="infosDroite">
+
                     <div class="villeOrganisatrice">
-                        <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
-                        <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="labelVilleOrganisatrice">Ville organisatrice :</p>
+                            </div>
+                            <div class="col-8">
+                                <p class="resultatVilleOrganisatrice">{{ sortie.site.nom }}</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="lieu">
-                        <p class="labelLieu">Lieu :</p>
-                        <p class="resultatLieu">{{ sortie.lieu.nom }}</p>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="labelLieu">Lieu :</p>
+                            </div>
+                            <div class="col-8">
+                                <p class="resultatLieu">{{ sortie.lieu.nom }}</p>
+                            </div>
+                        </div>
                     </div>
-                    {% if annuler is defined and annuler == true %}
-                    <div class="motif">
-                        <label for="story">Motif :</label>
 
-                        <textarea id="story" name="story"
-                                  rows="5" cols="33">
-</textarea>
-                        <a href="{{ path('main_annuler', {'idSortie': sortie.id}) }}" class="btn btn-primary">Enregistrer</a>
-                        <a href="{{ path('main_accueil') }}" class="btn btn-primary">Annuler</a>
-                        {% endif %}
-                    </div>
-                    {% if afficher is defined and afficher == true %}
-                    <div class="rue">
-                        <p class="labelRue">Rue :</p>
-                        <p class="resultatRue">{{ sortie.lieu.rue }}</p>
-                    </div>
-                    <div class="codePostal">
-                        <p class="labelCodePostal">Code postal :</p>
-                        <p class="resultatCodePostal">{{ sortie.lieu.ville.codePostal }}</p>
-                    </div>
-                    <div class="latitude">
-                        <p class="labelLatitude">Latitude :</p>
-                        <p class="resultatLatitude">{{ sortie.lieu.latitude }}</p>
-                    </div>
-                    <div class="longitude">
-                        <p class="labelLongitude">Lieu :</p>
-                        <p class="resultatLongitude">{{ sortie.lieu.longitude }}</p>
+
+                </div>
+                <div class="rue">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="labelRue">Rue :</p>
+                        </div>
+                        <div class="col-8">
+
+                            <p class="resultatRue">{{ sortie.lieu.rue }}</p>
+                        </div>
                     </div>
                 </div>
 
+                <div class="codePostal">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="labelCodePostal">Code postal :</p>
+                        </div>
+                        <div class="col-8">
+
+                            <p class="resultatCodePostal">{{ sortie.lieu.ville.codePostal }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="latitude">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="labelLatitude">Latitude :</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="resultatLatitude">{{ sortie.lieu.latitude }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="longitude">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="labelLongitude">Lieu :</p>
+                        </div>
+
+                        <div class="col-8">
+                            <p class="resultatLongitude">{{ sortie.lieu.longitude }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-        <div class="container-table">
-
-            <table class="participants-table">
-
+    </div>
+    <div class="mx-5 mt-5">
+    <h3>Liste des participants inscrits</h3>
+    <div class="tableParticipants">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar-participants">
+            <table class="table table-bordered mb-0">
+                <thead>
                 <tr>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% for eachParticipant in sortie.participants %}
                     <tr>
                         <td>{{ eachParticipant.userIdentifier }}</td>
                         <td>{{ eachParticipant.prenom }} {{ eachParticipant.nom|upper }}</td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
-        {% endif %}
-
     </div>
 {% endblock %}

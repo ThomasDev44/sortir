@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Font Awesome icons (free version)-->
@@ -23,10 +24,11 @@
     <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ path('main_accueil') }}">
-                <img class="" src="{{ asset('images/logo-sortir.png') }}" />
+                <img class="" src="{{ asset('images/logo-sortir.png') }}"/>
                 <i><strong>Sortir.com</strong></i>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -44,10 +46,11 @@
                             <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/Sponge_bob.png') }}" />
+                            <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false" src="{{ asset('images/Sponge_bob.png') }}"/>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {#                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a>#}
-                                {#                                <a class="dropdown-item" href="#">Autres action</a>#}
+                                {#                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a> #}
+                                {#                                <a class="dropdown-item" href="#">Autres action</a> #}
                             </div>
                         </li>
                     {% else %}
@@ -65,13 +68,15 @@
     {% block header %}
     {% endblock %}
 </head>
+
 <body>
-{% block body %}
+<div class="inBody">
+    {% block body %}
 
 
 
-
-{% endblock %}
+    {% endblock %}
+</div>
 </body>
 
 {% block javascripts %}
