@@ -4,14 +4,14 @@
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 #navlink {
-    /*color: #93af58;*/
+    color: #212529;
 }
 
 #navlink {
     transition: color 0.5s;
 }
 #navlink:hover {
-    color: #93af58;
+    color: #198754;
 }
 .navbar-sortir .navbar-collapse {
     flex-grow: 0;
