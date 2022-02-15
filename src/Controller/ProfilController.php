@@ -41,7 +41,8 @@ class ProfilController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         ParticipantRepository       $participantRepository)
     {
-        $participant = $this->getUser();
+        $participant = $this->getUser()->getUserIdentifier();
+       $participant = $participantRepository->findOneBy(['username'=>$participant]);
 
         $form = $this->createForm(ProfilType::class, $participant);
         $form->handleRequest($request);
