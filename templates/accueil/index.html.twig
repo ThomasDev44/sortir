@@ -146,25 +146,27 @@
                             {% endif %}
                             {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
                                 <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}"
-                                   class="link-light">Modifier
-                                    - </a>
+                                   class="link-light">Modifier</a> -
                                 <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}"
                                    class="link-light">Publier</a>
                             {% endif %}
                             {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
+                                -
                                 <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}  "
-                                   class="link-light"> - Annuler</a>
+                                   class="link-light"> Annuler</a>
                             {% endif %}
                             {% if isInscrit == true %}
+                                -
                                 <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"
                                    class="link-light">
-                                    - Se
+                                     Se
                                     désister</a>
                             {% endif %}
                             {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
+                                -
                                 <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"
                                    class="link-light">
-                                    -
+
                                     S'inscrire</a>
                             {% endif %}
                         </td>
