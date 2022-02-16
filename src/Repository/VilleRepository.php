@@ -21,6 +21,8 @@ class VilleRepository extends ServiceEntityRepository
 
     public function rechercheVilleParNom($terme)
     {
+        $terme = strtoupper($terme);
+        dump($terme);
         $qb = $this->createQueryBuilder('v');
         $qb
             ->andWhere('v.nom LIKE :termeSearch')

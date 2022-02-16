@@ -221,7 +221,7 @@
                                            class="btn btn-success" role="button">Publier</a>
                                     {% endif %}
                                     {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
-                                        <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}  "
+                                        <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"
                                            class="btn btn-success" role="button"> Annuler</a>
                                     {% endif %}
                                     {% if isInscrit == true %}

@@ -21,6 +21,7 @@ class SiteRepository extends ServiceEntityRepository
 
     public function rechercheSiteParNom($terme)
     {
+        $terme = strtoupper($terme);
         $qb = $this->createQueryBuilder('s');
         $qb
             ->andWhere('s.nom LIKE :termeSearch')
