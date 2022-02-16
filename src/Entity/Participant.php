@@ -45,7 +45,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $telephone;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
@@ -109,12 +109,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(?int $telephone): self
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
 
