@@ -19,61 +19,68 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('main_accueil') }}">
-                <img class="" src="{{ asset('images/logo-sortir.png') }}"/>
-                <i><strong class="titre">Sortir.com</strong></i>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('main_accueil') }}">
+                    <img class="" src="{{ asset('images/logo-sortir.png') }}" alt=""/>
+                    <i><strong class="titre">Sortir.com</strong></i>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
-                    {% if app.user %}
-                        <li class="nav-item active">
-                            <a class="nav-link " id="navlink" href="{{ path('main_accueil') }}">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="navlink" href="{{ path('update') }}">Mon profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {#                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a> #}
-                                {#                                <a class="dropdown-item" href="#">Autres action</a> #}
-                            </div>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" id="navlink" href="{{ path('app_login') }}">Se connecter</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="navlink" href="{{ path('app_register') }}">S'inscrire</a>
-                            <i class="fa-solid fa-1"></i>
-                        </li>
-                    {% endif %}
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        {% if app.user %}
+                            {% if app.user.granted('ROLE_ADMIN') %}
+                                <li class="nav-item active">
+                                    <a class="nav-link " id="navlink" href="{{ path('site_index') }}">Sites</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link " id="navlink" href="{{ path('ville_index') }}">Villes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="navlink" href="{{ path('app_register') }}">Inscrire Participant</a>
+                                    <i class="fa-solid fa-1"></i>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item active">
+                                <a class="nav-link " id="navlink" href="{{ path('main_accueil') }}">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="navlink" href="{{ path('update') }}">Mon profil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                {% if app.user.images != null %}
+                                    <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/photoprofil/'~app.user.images) }}" />
+                                {% else %}
+                                    <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" />
+                                {% endif %}
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    {#                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a> #}
+                                    {#                                <a class="dropdown-item" href="#">Autres action</a> #}
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
     {% block header %}
     {% endblock %}
 </head>
 
 <body>
-
 {% block body %}
 
 
 
 {% endblock %}
-
 </body>
 <footer>
     <div class="footer">

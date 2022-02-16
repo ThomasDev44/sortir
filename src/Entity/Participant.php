@@ -359,5 +359,10 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
             $this->password,
             ) = unserialize($serialized);
     }
+
+    public function isGranted($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
 }
 

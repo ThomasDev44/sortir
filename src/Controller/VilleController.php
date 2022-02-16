@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/ville')]
 class VilleController extends AbstractController
 {
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/', name: 'ville_index', methods: ['GET', 'POST'])]
     public function index(VilleRepository $villeRepository,
                           Request $request,
@@ -38,6 +39,7 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/rechercheParNom', name: 'ville_recherche_nom')]
     public function rechercheParSite(VilleRepository $villeRepository,
                                      Request $request,
@@ -65,6 +67,7 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/ajouter', name: 'ville_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -85,6 +88,7 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'ville_show', methods: ['GET'])]
     public function show(Ville $ville): Response
     {
@@ -93,6 +97,7 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}/modifier', name: 'ville_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
     {
@@ -111,6 +116,7 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'ville_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
     {
