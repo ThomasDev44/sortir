@@ -204,7 +204,7 @@ class AccueilController extends AbstractController
         $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
         $admin = false;
         foreach ($user->getRoles() as $value) {
-            if ($value = 'ROLE_ADMIN') {
+            if ($value == 'ROLE_ADMIN') {
                 $admin = true;
             }
         }
