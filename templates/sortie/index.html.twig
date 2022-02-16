@@ -29,7 +29,7 @@
                 <td>{{ sortie.nbInscriptionsMax }}</td>
                 <td>{{ sortie.InfosSortie }}</td>
                 <td>
-{#                    <a href="{{ path('main_annulerRedirection') }}">Annuler</a>#}
+                    <a href="{{ path('annuler_sortie_admin', {'idSortie': sortie.id})  }}">Annuler</a>
                 </td>
             </tr>
         {% else %}
@@ -40,5 +40,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('sortie_new') }}">Create new</a>
 {% endblock %}

@@ -80,4 +80,21 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('sortie_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/annulerRedirection/{idSortie}', name: 'annuler_sortie_admin')]
+    public function annulerRedirection($idSortie,
+                                       SortieRepository $sortieRepository,
+
+    ): Response
+    {
+        $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
+        $annuler = true;
+        return $this->render('sortie/annuler.html.twig', [
+
+            'sortie' => $laSortie,
+            'annuler' => $annuler,
+        ]);
+
+    }
+
 }
