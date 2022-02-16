@@ -28,14 +28,14 @@
                     <td>{{ ville.nom }}</td>
                     <td>{{ ville.codePostal }}</td>
                     <td>
-                            <form action="{{ path('ville_edit', {'id': ville.id}) }}">
-                                <input class="btn-success" type="submit" value="Modifier"/>
-                            </form>
-                            <form method="post" action="{{ path('ville_delete', {'id': ville.id}) }}"
-                                  onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
-                                <input class="btn-success" type="submit" value="Supprimer"/>
-                            </form>
+                        <form action="{{ path('ville_edit', {'id': ville.id}) }}">
+                            <input class="btn-success" type="submit" value="Modifier"/>
+                        </form>
+                        <form method="post" action="{{ path('ville_delete', {'id': ville.id}) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
+                            <input class="btn-success" type="submit" value="Supprimer"/>
+                        </form>
                     </td>
                 </tr>
                 {% else %}

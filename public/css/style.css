@@ -47,6 +47,10 @@ body {
     height: 330px;
     overflow: auto;
 
+}.my-custom-scrollbar-admin {
+    position: relative;
+    height: 600px;
+    overflow: auto;
 }
 
 .my-custom-scrollbar-participants {
