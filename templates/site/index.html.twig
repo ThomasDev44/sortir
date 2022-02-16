@@ -34,7 +34,7 @@
                                 <form action="{{ path('site_edit', {'id': site.id}) }}">
                                     <input class="btn-ghost" type="submit" value="Modifier" />
                                 </form>
-                                <form method="post" action="{{ path('site_delete', {'id': site.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <form method="post" action="{{ path('site_delete', {'id': site.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce site?');">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ site.id) }}">
                                     <input class="btn-ghost" type="submit" value="Supprimer" />
                                 </form>
