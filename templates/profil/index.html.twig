@@ -8,16 +8,18 @@
 
 
 {% block body %}
-    <div class="form-group text-center" >
+    <div class="form-group text-center">
         <div class="col col-md-12">
             <h2>Bienvenue <span class="text-success">{{ app.user.userIdentifier }}</span> !</h2>
         </div>
     </div>
 
-    <div class="form-group text-center" >
+    <div class="form-group text-center">
         <div class="col col-md-12">
-            {% if participant.images!=null %}<img src="{{ asset('images/photoprofil/'~participant.images) }}"width=150" height="150" alt="" class="image-ronde">
-            {% else %}<img src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" alt="" class="image-ronde">
+            {% if participant.images!=null %}<img src="{{ asset('images/photoprofil/'~participant.images) }}" width=150"
+                                                  height="150" alt="" class="image-ronde">
+            {% else %}<img src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" width=150" height="150" alt=""
+                           class="image-ronde">
             {% endif %}
         </div>
     </div>
@@ -27,107 +29,108 @@
 
         {{ form_start(form) }}
         {{ form_errors(form) }}
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.username) }}
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.username) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.username) }}
+                </div>
+                {{ form_errors(form.username) }}
             </div>
-            <div class="col-12 col-md-9" >
-                {{ form_widget(form.username) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.prenom) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.prenom) }}
+                </div>
+                {{ form_errors(form.prenom) }}
             </div>
-            {{ form_errors(form.username) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.prenom) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.nom) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.nom) }}
+                </div>
+                {{ form_errors(form.nom) }}
             </div>
-            <div class="col-12 col-md-9">
-                {{ form_widget(form.prenom) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.telephone) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.telephone) }}
+                </div>
+                {{ form_errors(form.telephone) }}
             </div>
-            {{ form_errors(form.prenom) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.nom) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.mail) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.mail) }}
+                </div>
+                {{ form_errors(form.mail) }}
             </div>
-            <div class="col-12 col-md-9">
-                {{ form_widget(form.nom) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    <label>Mot de passe : </label>
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.password.first) }}
+                </div>
+                {{ form_errors(form.password) }}
             </div>
-            {{ form_errors(form.nom) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.telephone) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    <label>Confirmation : </label>
+                </div>
+                <div class="col-12 col-md-9">
+                    {{ form_widget(form.password.second) }}
+                </div>
+                {{ form_errors(form.password) }}
             </div>
-            <div class="col-12 col-md-9">
-                {{ form_widget(form.telephone) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.site) }}
+                </div>
+                <div class="col-12 col-md-9" id="blabla">
+                    {{ form_widget(form.site) }}
+                </div>
             </div>
-            {{ form_errors(form.telephone) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.mail) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_label(form.fichierImage) }}
+                </div>
+                <div class="col-12 col-md-9" id="blabla">
+                    {{ form_widget(form.fichierImage) }}
+                </div>
             </div>
-            <div class="col-12 col-md-9">
-                {{ form_widget(form.mail) }}
-            </div>
-            {{ form_errors(form.mail) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                <label>Mot de passe : </label>
-            </div>
-            <div class="col-12 col-md-9">
-                {{ form_widget(form.password.first) }}
-            </div>
-            {{ form_errors(form.password) }}
-        </div>
-         <div class="form-group">
-            <div class="col col-md-7">
-                <label>Confirmation : </label>
-            </div>
-              <div class="col-12 col-md-9">
-                  {{ form_widget(form.password.second) }}
-            </div>
-             {{ form_errors(form.password) }}
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.site) }}
-            </div>
-            <div class="col-12 col-md-9" id="blabla">
-               {{ form_widget(form.site) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_label(form.fichierImage) }}
-            </div>
-            <div class="col-12 col-md-9" id="blabla">
-                {{ form_widget(form.fichierImage) }}
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col col-md-7">
-                {{ form_row(form.enregistrer, {'attr' : { 'class': 'btn btn-success' }}) }}
+            <div class="form-group">
+                <div class="col col-md-7">
+                    {{ form_row(form.enregistrer, {'attr' : { 'class': 'btn btn-success' }}) }}
+                </div>
+                <div class="col-12 col-md-9">
+                    <a href="{{ path('main_accueil') }}" role="button" class="btn btn-danger">Annuler</a>
+                </div>
             </div>
-            <div class="col-12 col-md-9">
-                <a href="{{ path('main_accueil') }}" role="button" class="btn btn-danger">Annuler</a>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col col-md-9 text-danger">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="flash-{{ label }}">
-                            {{ message }}
-                        </div>
+            <div class="form-group">
+                <div class="col col-md-9 text-danger">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
             </div>
         </div>
-
         {{ form_end(form) }}
 
     </div>
