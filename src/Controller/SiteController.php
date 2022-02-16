@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('admin/site')]
 class SiteController extends AbstractController
 {
-
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/', name: 'site_index', methods: ['GET', 'POST'])]
     public function index(SiteRepository $siteRepository,
                             Request $request,
@@ -38,6 +38,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/rechercheParNom', name: 'site_recherche_nom')]
     public function rechercheParSite(SiteRepository $siteRepository,
                                      Request $request,
@@ -65,6 +66,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'site_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -85,6 +87,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'site_show', methods: ['GET'])]
     public function show(Site $site): Response
     {
@@ -93,6 +96,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'site_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Site $site, EntityManagerInterface $entityManager): Response
     {
@@ -111,6 +115,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'site_delete', methods: ['POST'])]
     public function delete(Request $request, Site $site, EntityManagerInterface $entityManager): Response
     {

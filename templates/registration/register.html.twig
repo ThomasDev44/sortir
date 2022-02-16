@@ -1,17 +1,104 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}S'inscrire{% endblock %}
-
+{% block title %}Inscrire Participant{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
+{% endblock %}
 {% block body %}
-    <h1>S'inscrire</h1>
-
+    <div class="form-group text-center" >
+        <div class="col col-md-12">
+            <h1>Inscrire Participant</h1>
+        </div>
+    </div>
+<div class="d-flex justify-content-center">
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    {{ form_errors(registrationForm) }}
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.username, 'Pseudo') }}
+        </div>
+        <div class="col-12 col-md-9" >
+            {{ form_widget(registrationForm.username) }}
+        </div>
+        {{ form_errors(registrationForm.username) }}
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.prenom) }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(registrationForm.prenom) }}
+        </div>
+        {{ form_errors(registrationForm.prenom) }}
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.nom) }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(registrationForm.nom) }}
+        </div>
+        {{ form_errors(registrationForm.nom) }}
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.telephone) }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(registrationForm.telephone) }}
+        </div>
+        {{ form_errors(registrationForm.telephone) }}
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.mail) }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(registrationForm.mail) }}
+        </div>
+        {{ form_errors(registrationForm.mail) }}
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(registrationForm.plainPassword) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.site, 'Site de rattachement') }}
+        </div>
+        <div class="col-12 col-md-9" id="blabla">
+            {{ form_widget(registrationForm.site) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col col-md-7">
+            {{ form_label(registrationForm.administrateur) }}
+        </div>
+        <div class="col-12 col-md-9" id="blabla">
+            {{ form_widget(registrationForm.administrateur) }}
+        </div>
+    </div>
 
-        <button type="submit" class="btn">S'enregistrer</button>
+    <div class="form-group text-center">
+        <div class="col col-md-12">
+            <button type="submit" class="btn btn-success">Enregistrer Participant</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col col-md-9 text-danger">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
