@@ -81,6 +81,9 @@ label {
     max-width: 500px !important;
 }
 
+form {
+    display: inline;
+}
 * {
     color: white;
 }
