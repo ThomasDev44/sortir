@@ -1,18 +1,122 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Sortie{% endblock %}
+{% block title %}Modifier une Sortie{% endblock %}
 
 {% block body %}
-    <h1>Modifier une sortie</h1>
+    <div class="text-center">
+        <h1>Modifier une sortie</h1>
+    </div>
 
     {{ form_start(formSortie) }}
-    {{ form_widget(formSortie) }}
-    <button class="btn-primary">Enregistrer</button>
+    <div class="container">
+        <div class="row">
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.nom) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.nom) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.dateHeureDebut) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.dateHeureDebut) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.dateLimiteInscription) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.dateLimiteInscription) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.nbInscriptionsMax) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.nbInscriptionsMax) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.duree) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.duree) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.InfosSortie) }}
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.InfosSortie) }}
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.site) }}
+
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.site) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4">
+                    {{ form_label(formSortie.lieu) }}
+
+                </div>
+                <div class="col-md-4 col-5">
+                    {{ form_widget(formSortie.lieu) }}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-3">
+                            <button class="btn btn-success">Enregistrer</button>
+                        </div>
+
+                        <div class="col-3">
+                            <a href="{{ path('main_publier', {'idSortie': sortie.id }) }}" class="btn btn-success"
+                               type="button">Publier</a>
+                        </div>
+
+                        <div class="col-3">
+                            <a href="{{ path('main_supprimer', {'idSortie' : sortie.id}) }}" class="btn btn-danger"
+                               type="button">Supprimer</a>
+                        </div>
+
+                        <div class="col-3">
+                            <a href="{{ path('main_accueil') }}" class="btn btn-danger" type="button">Annuler</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{ form_end(formSortie) }}
-
-    <a href="{{ path('main_publier', {'idSortie': sortie.id }) }}" class="btn-primary">Publier la sortie</a>
-    <a href="{{ path('main_supprimer', {'idSortie' : sortie.id}) }}" class="btn-primary">Supprimer la sortie</a>
-    <a href="{{ path('main_accueil') }}" class="btn-primary">Annuler</a>
-
-
 {% endblock %}
