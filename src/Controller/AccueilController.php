@@ -202,7 +202,13 @@ class AccueilController extends AbstractController
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
-        if ($laSortie->getOrganisateur() === $user and $laSortie->getEtat()->getLibelle() == 'Ouverte') {
+        $admin = false;
+        foreach ($user->getRoles() as $value) {
+            if ($value = 'ROLE_ADMIN') {
+                $admin = true;
+            }
+        }
+        if (($laSortie->getOrganisateur() === $user) and ($laSortie->getEtat()->getLibelle() == 'Ouverte') or ($admin == true)) {
             $laSortie->setEtat($etat);
             $entityManager->persist($laSortie);
             $entityManager->flush();
