@@ -47,14 +47,12 @@ class ProfilController extends AbstractController
         $form = $this->createForm(ProfilType::class, $participant);
         $form->handleRequest($request);
 
-        /*dd(filter_input(INPUT_POST, 'verifpass', FILTER_SANITIZE_STRING));*/
-
         if ($form->isSubmitted()
             && $form->isValid()
         ) {
-            /* //est ce que le pseudo est unique
+             /*//est ce que le pseudo est unique
              //utilisation d'une méthode que nous allons ajouter au repository
-             if($participantRepository->findOneByPseudo($participant->getPseudo()) != null)
+             if($participantRepository->findOneByPseudo($participant->getUserIdentifier()) != null)
              {// s'il ne l'est pas, on renvoie vers la page de création d'utilisateur avec une notification
                  return $this->render('profil/index.html.twig', [
                      'participant' => $participant,
