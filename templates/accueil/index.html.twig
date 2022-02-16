@@ -5,19 +5,17 @@
 {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container">
         <h4 class="mb-5 mt-5">Filtrer les sorties</h4>
         <form action="{{ path('main_recherche') }}" method="post">
             <div class="mb-4"></div>
             <div class="row">
                 <div class="col-xl-5 col-lg-6 col-sm-12">
-
-                    {% for message in app.flashes('error') %}
-                        <div class="alert alert-danger">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-
 
                     <label for="sites-select" class="col-form-label">Site :</label>
                     <select name="sites-select" id="sites-select">

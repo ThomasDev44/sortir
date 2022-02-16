@@ -42,7 +42,7 @@ class ProfilController extends AbstractController
         ParticipantRepository       $participantRepository)
     {
         $participant = $this->getUser()->getUserIdentifier();
-       $participant = $participantRepository->findOneBy(['username'=>$participant]);
+        $participant = $participantRepository->findOneBy(['username' => $participant]);
 
         $form = $this->createForm(ProfilType::class, $participant);
         $form->handleRequest($request);
