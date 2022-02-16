@@ -1,0 +1,29 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin-block: 25px;
+    font-weight: bold;
+    color: white;
+}
+
+#blabla {
+    color: black;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    text-align: center;
+}
+
+/*.form-control {
+    display: flex;
+    flex-direction: row;
+}*/
+
