@@ -214,7 +214,7 @@
                                         <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}"
                                            class="btn btn-success" role="button">Afficher</a>
                                     {% endif %}
-                                    {% if (eachSortie.etat == 'Créée') and (isOrganisateur == 1) %}
+                                    {% if (eachSortie.etat == 'Créée') and (isOrganisateur == true) %}
                                         <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}"
                                            class="btn btn-success" role="button">Modifier</a>
                                         <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}"

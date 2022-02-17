@@ -7,8 +7,10 @@
 {% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% if error is defined %}
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
     {% endif %}
 
     <div class="limiter">
@@ -19,15 +21,18 @@
                 <span class="login100-form-title p-b-48">
 						<h3>Veuillez vous identifier</h3>
 					</span>
-                    <div class="wrap-input100 validate-input" data-validate = "Entrer votre pseudo">
-                        <input class="input100" id="input100" type="text" value="{{app.request.cookies.get('cookieUsername')}}" placeholder="Login" name="username" id="inputUsername"
+                    <div class="wrap-input100 validate-input" data-validate="Entrer votre pseudo">
+                        <input class="input100" id="input100" type="text"
+                               value="{{ app.request.cookies.get('cookieUsername') }}" placeholder="Login"
+                               name="username" id="inputUsername"
                                autocomplete="username" required autofocus>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Enter mot de passe">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-                        <input class="input100" id="input100" type="password" placeholder="Mot de passe" name="password" id="inputPassword" autocomplete="current-password" required >
+                        <input class="input100" id="input100" type="password" placeholder="Mot de passe" name="password"
+                               id="inputPassword" autocomplete="current-password" required>
                     </div>
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}">
@@ -43,7 +48,8 @@
                     <div class="text-center p-t-115">
                         <div class="checkbox mb-3"><br>
                             <label>
-                                <input id="remember_me" type="checkbox" name="remember_me" value="on">  Se souvenir de moi
+                                <input id="remember_me" type="checkbox" name="remember_me" value="on"> Se souvenir de
+                                moi
                             </label>
                         </div>
                         <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>

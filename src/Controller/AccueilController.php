@@ -95,8 +95,10 @@ class AccueilController extends AbstractController
     ): Response
     {
         $erreur = false;
+        $isInscrit = false;
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $dateNow = new \DateTime('NOW');
+        $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         if ($laSortie->getDateLimiteInscription() < $dateNow) {
             $this->addFlash('error', 'La date de clôture est passée');
             $erreur = true;
@@ -104,8 +106,24 @@ class AccueilController extends AbstractController
         if ($laSortie->getNbInscriptionsMax() == $laSortie->getParticipants()->count()) {
             $this->addFlash('error', 'La sortie est déjà complète');
             $erreur = true;
-
         }
+        if ($laSortie->getOrganisateur() === $user) {
+            $this->addFlash('error', 'Vous ne pouvez pas vous inscrire sur votre propre sortie');
+            $erreur = true;
+        }
+        if ($laSortie->getEtat() != 'Ouverte') {
+            $this->addFlash('error', "L'êtat de la sortie doit être ouverte");
+        }
+        foreach ($laSortie->getParticipants() as $value) {
+            if ($value == $user) {
+                $isInscrit = true;
+            }
+        }
+        if ($isInscrit == true) {
+            $this->addFlash('error', "Vous êtes déjà inscrit à cette sortie");
+            $erreur = true;
+        }
+
 
         if ($erreur == false) {
             $user = $this->getUser()->getUserIdentifier();
@@ -131,12 +149,25 @@ class AccueilController extends AbstractController
                              EntityManagerInterface $entityManager,
     ): Response
     {
+        $erreur = false;
+        $isInscrit = false;
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
-        $laSortie->removeParticipant($user);
-        $entityManager->persist($laSortie);
-        $entityManager->flush();
 
+        foreach ($laSortie->getParticipants() as $value) {
+            if ($value === $user) {
+                $isInscrit = true;
+            }
+        }
+        if ($isInscrit == false) {
+            $this->addFlash('error', "Vous n'êtes pas inscrit à cette sortie");
+            $erreur = true;
+        }
+        if ($erreur == false) {
+            $laSortie->removeParticipant($user);
+            $entityManager->persist($laSortie);
+            $entityManager->flush();
+        }
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
@@ -177,16 +208,40 @@ class AccueilController extends AbstractController
     #[Route('/annulerRedirection/{idSortie}', name: 'annulerRedirection')]
     public function annulerRedirection($idSortie,
                                        SortieRepository $sortieRepository,
+                                       SiteRepository $siteRepository,
+                                       ParticipantRepository $participantRepository,
+
 
     ): Response
     {
+        $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $annuler = true;
-        return $this->render('sortie/annuler.html.twig', [
+        $erreur = false;
 
-            'sortie' => $laSortie,
-            'annuler' => $annuler,
-        ]);
+        if ($laSortie->getEtat() != 'Ouverte') {
+            $this->addFlash('error', "L'êtat de la sortie ne le permet pas, elle doit être ouverte");
+            $erreur = true;
+        }
+        if ($laSortie->getOrganisateur() !== $user) {
+            $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie");
+            $erreur = true;
+        }
+
+        if ($erreur == false) {
+            return $this->render('sortie/annuler.html.twig', [
+
+                'sortie' => $laSortie,
+                'annuler' => $annuler,
+            ]);
+        } else {
+            $sorties = $sortieRepository->findAll();
+            $sites = $siteRepository->findAll();
+            return $this->render('accueil/index.html.twig', [
+                'sorties' => $sorties,
+                'sites' => $sites,
+            ]);
+        }
 
     }
 
@@ -203,17 +258,26 @@ class AccueilController extends AbstractController
         $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
         $admin = false;
+        $erreur = false;
         foreach ($user->getRoles() as $value) {
             if ($value == 'ROLE_ADMIN') {
                 $admin = true;
             }
         }
-        if (($laSortie->getOrganisateur() === $user) and ($laSortie->getEtat()->getLibelle() == 'Ouverte') or ($admin == true)) {
+        if ($laSortie->getOrganisateur() !== $user) {
+            $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie");
+            $erreur = true;
+        }
+        if ($laSortie->getEtat()->getLibelle() != 'Ouverte') {
+            $this->addFlash('error', "L'êtat de la sortie ne permet pas cette action");
+            $erreur = true;
+        }
+
+
+        if (($erreur == false) or ($admin == true)) {
             $laSortie->setEtat($etat);
             $entityManager->persist($laSortie);
             $entityManager->flush();
-        } else {
-            $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie ou l'etat de la sortie ne le permet pas !");
         }
 
 
@@ -228,15 +292,34 @@ class AccueilController extends AbstractController
     #[Route('/afficher/{idSortie}', name: 'afficher')]
     public function afficher($idSortie,
                              SortieRepository $sortieRepository,
+                             ParticipantRepository $participantRepository,
+                             SiteRepository $siteRepository,
+
     ): Response
     {
         $afficher = true;
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
+        $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
+        $erreur = false;
 
-        return $this->render('sortie/show.html.twig', [
-            "sortie" => $laSortie,
-            "afficher" => $afficher,
-        ]);
+        if ($laSortie->getEtat() == 'Créée') {
+            $this->addFlash('error', "La sortie est toujours en cours de création");
+            $erreur = true;
+        }
+        if ($erreur == false) {
+            return $this->render('sortie/show.html.twig', [
+                "sortie" => $laSortie,
+                "afficher" => $afficher,
+            ]);
+
+        } else {
+            $sorties = $sortieRepository->findAll();
+            $sites = $siteRepository->findAll();
+            return $this->render('accueil/index.html.twig', [
+                'sorties' => $sorties,
+                'sites' => $sites,
+            ]);
+        }
     }
 
     #[Route('/modifier/{idSortie}', name: 'modifier')]
@@ -245,6 +328,7 @@ class AccueilController extends AbstractController
                              Request $request,
                              EntityManagerInterface $entityManager,
                              SiteRepository $siteRepository,
+                             ParticipantRepository $participantRepository,
 
     ): Response
     {
@@ -255,6 +339,7 @@ class AccueilController extends AbstractController
         $form->handleRequest($request);
         $sites = $siteRepository->findAll();
         $sorties = $sortieRepository->findAll();
+        $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $erreur = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -268,6 +353,14 @@ class AccueilController extends AbstractController
             }
             if ($laSortie->getDuree() <= 0) {
                 $this->addFlash('error', 'La durée doit être supérieure à 0');
+                $erreur = true;
+            }
+            if ($laSortie->getEtat() != "Créée") {
+                $this->addFlash('error', "Vous ne pouvez pas modifier une sortie qui n'est pas en cours de création");
+                $erreur = true;
+            }
+            if ($laSortie->getOrganisateur() !== $user) {
+                $this->addFlash('error', "Vous ne pouvez pas modifier une sortie dont vous n'êtes pas l'oganisateur");
                 $erreur = true;
             }
 
@@ -291,11 +384,27 @@ class AccueilController extends AbstractController
                               SortieRepository $sortieRepository,
                               EntityManagerInterface $entityManager,
                               SiteRepository $siteRepository,
+                              ParticipantRepository $participantRepository,
     ): Response
     {
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
-        $entityManager->remove($laSortie);
-        $entityManager->flush();
+        $erreur = false;
+        $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
+
+        if ($laSortie->getEtat() != "Créée") {
+            $this->addFlash('error', "Vous ne pouvez pas modifier une sortie qui n'est pas en cours de création");
+            $erreur = true;
+        }
+        if ($laSortie->getOrganisateur() !== $user) {
+            $this->addFlash('error', "Vous ne pouvez pas modifier une sortie dont vous n'êtes pas l'oganisateur");
+            $erreur = true;
+        }
+
+        if ($erreur == false) {
+            $entityManager->remove($laSortie);
+            $entityManager->flush();
+        }
+
         $sites = $siteRepository->findAll();
         $sorties = $sortieRepository->findAll();
 

@@ -18,76 +18,83 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-        <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
-            <div class="container">
-                {% if app.user %}
+    <div class="navbar navbar-expand-sm navbar-light navbar-sortir">
+        <div class="container">
+            {% if app.user %}
                 <a class="navbar-brand" href="{{ path('main_accueil') }}">
                     <img class="" src="{{ asset('images/logo-sortir.png') }}" alt=""/>
                     <i><strong class="titre">Sortir.com</strong></i>
                 </a>
 
-                {% else %}
-                    <a class="navbar-brand" href="{{ path('app_login') }}">
-                        <img class="" src="{{ asset('images/logo-sortir.png') }}" alt=""/>
-                        <i><strong class="titre">Sortir.com</strong></i>
-                    </a>
-                {% endif %}
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            {% else %}
+                <a class="navbar-brand" href="{{ path('app_login') }}">
+                    <img class="" src="{{ asset('images/logo-sortir.png') }}" alt=""/>
+                    <i><strong class="titre">Sortir.com</strong></i>
+                </a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto">
-                        {% if app.user %}
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    {% if app.user %}
+                        <li class="nav-item active">
+                            <a class="nav-link " id="navlink" href="{{ path('main_accueil') }}">Accueil</a>
+                        </li>
+                        {% if app.user.granted('ROLE_ADMIN') %}
                             <li class="nav-item active">
-                                <a class="nav-link " id="navlink" href="{{ path('main_accueil') }}">Accueil</a>
+                                <a class="nav-link " id="navlink" href="{{ path('site_index') }}">Sites</a>
                             </li>
-                            {% if app.user.granted('ROLE_ADMIN') %}
-                                <li class="nav-item active">
-                                    <a class="nav-link " id="navlink" href="{{ path('site_index') }}">Sites</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link " id="navlink" href="{{ path('ville_index') }}">Villes</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link " id="navlink" href="{{ path('sortie_index') }}">Annuler une sortie</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="navlink" href="{{ path('app_register') }}">Enregistrer participant</a>
-                                    <i class="fa-solid fa-1"></i>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="navlink" href="{{ path('participant_index') }}">Gérer les participants</a>
-                                    <i class="fa-solid fa-1"></i>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" id="navlink" href="{{ path('update') }}">Mon profil</a>
+                            <li class="nav-item active">
+                                <a class="nav-link " id="navlink" href="{{ path('ville_index') }}">Villes</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link " id="navlink" href="{{ path('sortie_index') }}">Annuler une
+                                    sortie</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
+                                <a class="nav-link" id="navlink" href="{{ path('app_register') }}">Enregistrer
+                                    participant</a>
+                                <i class="fa-solid fa-1"></i>
                             </li>
-                            <li class="nav-item dropdown">
-                                {% if app.user.images != null %}
-                                    <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/photoprofil/'~app.user.images) }}" />
-                                {% else %}
-                                    <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" />
-                                {% endif %}
-                                {% if app.user.granted('ROLE_ADMIN') %}
-                                    <span class="badge bg-danger">Admin</span>
-                                {% endif %}
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                                                    <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a>
-                                                                    <a class="dropdown-item" href="#">Autres action</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" id="navlink" href="{{ path('participant_index') }}">Gérer les
+                                    participants</a>
+                                <i class="fa-solid fa-1"></i>
                             </li>
                         {% endif %}
-                    </ul>
-                </div>
+                        <li class="nav-item">
+                            <a class="nav-link" id="navlink" href="{{ path('update') }}">Mon profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="navlink" href="{{ path('app_logout') }}">Se deconnecter</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            {% if app.user.images != null %}
+                                <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
+                                     aria-haspopup="true" aria-expanded="false"
+                                     src="{{ asset('images/photoprofil/'~app.user.images) }}"/>
+                            {% else %}
+                                <img class="avatar-large dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown"
+                                     aria-haspopup="true" aria-expanded="false"
+                                     src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}"/>
+                            {% endif %}
+                            {% if app.user.granted('ROLE_ADMIN') %}
+                                <span class="badge bg-danger">Admin</span>
+                            {% endif %}
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('ville_index') }}">Mon profil</a>
+                                <a class="dropdown-item" href="#">Autres action</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
+    </div>
     {% block header %}
     {% endblock %}
 </head>
@@ -104,8 +111,10 @@
         <div class="footer-links">
             <a href="https://github.com/EditionsENI"><i class="fa fa-github-square"></i></a>
             <a href="https://fr-fr.facebook.com/EniEcoleInformatique/"><i class="fa fa-facebook-square"></i></a>
-            <a href="https://twitter.com/ENIEcoleInforma?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="fa fa-twitter-square"></i></a>
-            <a href="https://www.linkedin.com/school/eni-ecole-informatique/?originalSubdomain=fr"><i class="fa fa-linkedin-square"></i></a>
+            <a href="https://twitter.com/ENIEcoleInforma?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i
+                        class="fa fa-twitter-square"></i></a>
+            <a href="https://www.linkedin.com/school/eni-ecole-informatique/?originalSubdomain=fr"><i
+                        class="fa fa-linkedin-square"></i></a>
         </div>
         <div class="footer-copyright footer-links footer-links-copyright">
             <a href="https://www.eni-ecole.fr/">© {{ "now" | date("Y") }} ENI Ecole Informatique</a>

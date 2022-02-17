@@ -3,82 +3,89 @@
 {% block title %}Réinitialisation du mdp{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/redirection.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/redirection.css') }}" xmlns="http://www.w3.org/1999/html">
 {% endblock %}
 
 {% block body %}
 
-        <div class="form-group">
-            <div class="col col-md-9 text-danger">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="flash-{{ label }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+    <div class="form-group">
+        <div class="col col-md-9 text-danger">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
-            </div>
+            {% endfor %}
         </div>
+    </div>
 
 
-    <form class="container">
-        <h1 class="text-center mt-2 mb-5">Réinitialisation du mot de passe</h1>
-        <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-12">
+    <div class="container">
+        <form action="{{ path('redirectionverification') }}" method="post">
+            <h1 class="text-center mt-2 mb-5">Réinitialisation du mot de passe</h1>
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-12">
 
-                <div class="Pseudo">
-                    <div class="row mt-5 mb-5 text-center">
-                        <div class="col-md-4 col-5">
-                            <label for="pseudo">Pseudo :</label>
-                        </div>
-                        <div class="row col-6">
-                            <input type="text" class="form-control" id="text" placeholder="Entrez votre pseudo">
+                    <div class="Pseudo">
+                        <div class="row mt-5 mb-5 text-center">
+                            <div class="col-md-4 col-5">
+                                <label for="pseudo">Pseudo :</label>
+                            </div>
+                            <div class="row col-6">
+                                <input type="text" class="form-control" id="text" name="pseudo"
+                                       placeholder="Entrez votre pseudo">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="Email">
-                    <div class="row mt-5 mb-5 text-center">
-                        <div class="col-md-4 col-5">
-                            <label for="text">Email :</label>
-                        </div>
-                        <div class="row col-6">
-                            <input type="email" class="form-control" id="text" placeholder="Entrez votre adresse mail">
+                    <div class="Email">
+                        <div class="row mt-5 mb-5 text-center">
+                            <div class="col-md-4 col-5">
+                                <label for="text">Email :</label>
+                            </div>
+                            <div class="row col-6">
+                                <input type="email" class="form-control" id="text" name="mail"
+                                       placeholder="Entrez votre adresse mail">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="Mot de passe">
-                    <div class="row mt-5 mb-5 text-center">
-                        <div class="col-md-4 col-5">
-                            <label for="password">Mot de passe :</label>
-                        </div>
-                        <div class="row col-6">
-                            <input type="password" class="form-control" id="password" placeholder="Entrez votre nouveau mot de passe">
+                    <div class="Mot de passe">
+                        <div class="row mt-5 mb-5 text-center">
+                            <div class="col-md-4 col-5">
+                                <label for="password">Mot de passe :</label>
+                            </div>
+                            <div class="row col-6">
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="Entrez votre nouveau mot de passe">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="Confirmation">
-                    <div class="row mt-5 mb-5 text-center">
-                        <div class="col-md-4 col-5">
-                            <label for="password">Confirmation :</label>
-                        </div>
-                        <div class="row col-6">
-                            <input type="password" class="form-control" id="password" placeholder="Confirmez nouveau mot de passe">
+                    <div class="Confirmation">
+                        <div class="row mt-5 mb-5 text-center">
+                            <div class="col-md-4 col-5">
+                                <label for="password">Confirmation :</label>
+                            </div>
+                            <div class="row col-6">
+                                <input type="password" class="form-control" id="password" name="confirmation"
+                                       placeholder="Confirmez nouveau mot de passe">
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
 
-        <div class="container">
-            <div class="mt-2">
-                <div class="d-flex justify-content-center">
-        <a href="{{path('app_login') }}" class="btn btn-success" type="button">Confirmer</a>
+
+            <div class="container">
+                <div class="mt-2">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Confirmer</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}
