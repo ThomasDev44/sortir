@@ -1,5 +1,16 @@
+
 {{ form_start(form) }}
-<td class="input-table">{{ form_widget(form.nom) }}</td>
-<td class="input-table">{{ form_widget(form.codePostal) }}</td>
-<td><input class="btn-success" type="submit" value="{{ button_label|default('Ajouter') }}"/></td>
+<div class="container">
+    <div class="row justify-content-center">
+            <div class="mt-2 col-sm-7 ">
+                <div class="input-table">{{ form_widget(form.nom) }}</div>
+            </div>
+            <div class="mt-4 col-sm-7">
+                <div class="input-table">{{ form_widget(form.codePostal) }}</div>
+            </div>
+            <div class="mt-4">
+                <div><input class="btn-success" type="submit" value="{{ button_label|default('Ajouter') }}"/></div>
+            </div>
+    </div>
+</div>
 {{ form_end(form) }}
