@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réinitialisation du mdp (acte II){% endblock %}
+{% block title %}Réinitialisation du mdp{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/redirection.css') }}">
 {% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
 
         <div class="form-group">
             <div class="col col-md-9 text-danger">
@@ -24,8 +21,8 @@
         </div>
 
 
-    <form class="container-fluid">
-        <h1 class="text-center mt-5 mb-5">Réinitialisation du mot de passe</h1>
+    <form class="container">
+        <h1 class="text-center mt-2 mb-5">Réinitialisation du mot de passe</h1>
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-12">
 
@@ -36,6 +33,17 @@
                         </div>
                         <div class="row col-6">
                             <input type="text" class="form-control" id="text" placeholder="Entrez votre pseudo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Email">
+                    <div class="row mt-5 mb-5 text-center">
+                        <div class="col-md-4 col-5">
+                            <label for="text">Email :</label>
+                        </div>
+                        <div class="row col-6">
+                            <input type="email" class="form-control" id="text" placeholder="Entrez votre adresse mail">
                         </div>
                     </div>
                 </div>
@@ -66,7 +74,7 @@
         </div>
 
         <div class="container">
-            <div class="mt-5">
+            <div class="mt-2">
                 <div class="d-flex justify-content-center">
         <a href="{{path('app_login') }}" class="btn btn-success" type="button">Confirmer</a>
                 </div>
