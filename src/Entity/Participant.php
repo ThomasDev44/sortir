@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 
 /**
@@ -45,9 +46,19 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
+    #[Assert\Regex(
+        pattern: '/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/',
+        message: "Le format du téléphone n'est pas bon",
+        match: true,
+    )]
     #[ORM\Column(type: 'string', nullable: true)]
     private $telephone;
 
+    #[Assert\Regex(
+        pattern: "/^[\w\.]+@([\w]+\.)+[\a-z]{2,4}$/",
+        message: "Le format du mail n'est pas bon",
+        match: true,
+    )]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $mail;
 
