@@ -6,10 +6,6 @@
     color: white;
 }
 
-#blabla {
-    color: black;
-}
-
 .box {
     display: flex;
     flex-direction: row;

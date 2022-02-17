@@ -1,102 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une Sortie{% endblock %}
+{% block title %}Ajouter un lieu{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
 {% endblock %}
 
 {% block body %}
+
     <div class="text-center p-3">
-        <h1>Créer une sortie</h1>
+        <h1>Ajouter un lieu</h1>
     </div>
 
-    {{ form_start(form) }}
+    {{ form_start(formlieu) }}
     <div class="container">
         <div class="row">
             <div class="row mt-4">
                 <div class="col-md-4 col-2"></div>
                 <div class="col-md-2 col-4">
-                    {{ form_label(form.nom) }}
+                    {{ form_label(formlieu.nom) }}
                 </div>
                 <div class="col-md-4 col-5">
-                    {{ form_widget(form.nom) }}
+                    {{ form_widget(formlieu.nom) }}
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-md-4 col-2"></div>
                 <div class="col-md-2 col-4">
-                    {{ form_label(form.dateHeureDebut) }}
+                    {{ form_label(formlieu.rue) }}
                 </div>
                 <div class="col-md-4 col-5">
-                    {{ form_widget(form.dateHeureDebut) }}
+                    {{ form_widget(formlieu.rue) }}
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-md-4 col-2"></div>
                 <div class="col-md-2 col-4">
-                    {{ form_label(form.dateLimiteInscription) }}
+                    {{ form_label(formlieu.latitude) }}
                 </div>
                 <div class="col-md-4 col-5">
-                    {{ form_widget(form.dateLimiteInscription) }}
+                    {{ form_widget(formlieu.latitude) }}
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-md-4 col-2"></div>
                 <div class="col-md-2 col-4">
-                    {{ form_label(form.nbInscriptionsMax) }}
+                    {{ form_label(formlieu.longitude) }}
                 </div>
                 <div class="col-md-4 col-5">
-                    {{ form_widget(form.nbInscriptionsMax) }}
+                    {{ form_widget(formlieu.longitude) }}
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-md-4 col-2"></div>
                 <div class="col-md-2 col-4">
-                    {{ form_label(form.duree) }}
+                    {{ form_label(formlieu.ville) }}
                 </div>
                 <div class="col-md-4 col-5">
-                    {{ form_widget(form.duree) }}
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-4 col-2"></div>
-                <div class="col-md-2 col-4">
-                    {{ form_label(form.InfosSortie) }}
-                </div>
-                <div class="col-md-4 col-5">
-                    {{ form_widget(form.InfosSortie) }}
-                </div>
-            </div>
-
-
-            <div class="row mt-4">
-                <div class="col-md-4 col-2"></div>
-                <div class="col-md-2 col-4">
-                    {{ form_label(form.site) }}
-                </div>
-                <div class="col-md-4 col-5">
-                    {{ form_widget(form.site) }}
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-4 col-2"></div>
-                <div class="col-md-2 col-4">
-                    {{ form_label(form.lieu) }}
-                </div>
-
-                <div class="col-md-4 col-5">
-                    {{ form_widget(form.lieu) }}
-
-                </div>
-                <div class="col-md-2 col-45">
-                    <a href="{{ path('lieu_new') }}"><img src="{{ asset('images/favicon-32x32.png') }}" alt=""></a>
+                    {{ form_widget(formlieu.ville) }}
                 </div>
             </div>
 
@@ -118,12 +83,12 @@
                         </div>#}
 
                         <div class="col-6">
-                            <a href="{{ path('main_accueil') }}" class="btn btn-danger" type="button">Annuler</a>
+                            <a href="{{ path('sortie_new') }}" class="btn btn-danger" type="button">Annuler</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{ form_end(form) }}
+    {{ form_end(formlieu) }}
 {% endblock %}

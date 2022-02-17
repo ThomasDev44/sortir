@@ -21,10 +21,10 @@ class Lieu
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $rue;
 
-    #[ORM\Column(type: 'float', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $latitude;
 
-    #[ORM\Column(type: 'float', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $longitude;
 
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class, orphanRemoval: true)]
@@ -73,24 +73,24 @@ class Lieu
         return $this;
     }
 
-    public function getLatitude(): ?float
+    public function getLatitude(): ?string
     {
         return $this->latitude;
     }
 
-    public function setLatitude(?float $latitude): self
+    public function setLatitude(?string $latitude): self
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?float
+    public function getLongitude(): ?string
     {
         return $this->longitude;
     }
 
-    public function setLongitude(?float $longitude): self
+    public function setLongitude(?string $longitude): self
     {
         $this->longitude = $longitude;
 
