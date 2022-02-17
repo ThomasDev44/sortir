@@ -3,10 +3,18 @@
 {% block title %}Modifier un Site{% endblock %}
 
 {% block body %}
-    <h1>Modifier un Site</h1>
 
-    {{ include('site/_form.html.twig', {'button_label': 'Enregistrer'}) }}
-
-    <a href="{{ path('site_index') }}">Retour à la liste</a>
-
+    <div class="container">
+        <h1 class="text-center mt-2 mb-8">Modifier un Site</h1>
+        <div class="row justify-content-center">
+            <div class="row mt-5 mb-5 text-center">
+                <div class="mt-2">
+                    {{ include('site/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+                </div>
+                <div class="mt-2">
+                    <a href="{{ path('site_index') }}">Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
