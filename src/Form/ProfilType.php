@@ -36,14 +36,14 @@ class ProfilType extends AbstractType
             ->add('mail', EmailType::class, [
                 'label' => 'Email :'
             ])
-            ->add('password', RepeatedType::class, array(
+            /*->add('password', RepeatedType::class, array(
                 'type'              => PasswordType::class,
                 'label'             => 'Password : ',
                 'mapped'            => false,
                 'first_options'     => array('label' => 'Mot de passe : '),
                 'second_options'    => array('label' => 'Confirmation : '),
                 'invalid_message' => 'Le mot de passe doit être identique',
-            ))
+            ))*/
             ->add('site', EntityType::class, [
                 'label' => 'Site de rattachement :',
                 'class' => Site::class,

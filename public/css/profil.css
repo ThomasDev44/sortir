@@ -32,4 +32,45 @@
         flex-direction: column;
         align-items: stretch;
     }
+    .row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    body {
+        padding-bottom: 100px;
+    }
+    #boutonicon {
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .form-inline {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    body {
+        padding-bottom: 100px;
+    }
+    #boutonicon {
+        padding-top: 20px;
+    }
+}
+@media (max-width: 1200px) {
+
+    body {
+        padding-bottom: 100px;
+    }
+
 }

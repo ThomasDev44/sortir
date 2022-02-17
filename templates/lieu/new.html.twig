@@ -66,26 +66,12 @@
             </div>
 
             <div class="row mt-4">
-                <div class="d-flex justify-content-center">
-                    <div class="row">
-                        <div class="col-6">
-                            <button class="btn btn-success">Enregistrer</button>
-                        </div>
-
-                        {#<div class="col-3">
-                            <a href="{{ path('main_publier', {'idSortie': sortie.id }) }}" class="btn btn-success"
-                               type="button">Publier</a>
-                        </div>#}
-
-                        {#<div class="col-3">
-                            <a href="{{ path('main_supprimer', {'idSortie' : sortie.id}) }}" class="btn btn-danger"
-                               type="button">Supprimer</a>
-                        </div>#}
-
-                        <div class="col-6">
-                            <a href="{{ path('sortie_new') }}" class="btn btn-danger" type="button">Annuler</a>
-                        </div>
-                    </div>
+                <div class="col-md-4 col-2"></div>
+                <div class="col-md-2 col-4 text-center pb-4">
+                    <button class="btn btn-success">Enregistrer</button>
+                </div>
+                <div class="col-md-4 col-5 text-center pb-4">
+                    <a href="{{ path('sortie_new') }}" class="btn btn-danger" type="button">Annuler</a>
                 </div>
             </div>
         </div>
