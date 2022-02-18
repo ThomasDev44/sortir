@@ -4,6 +4,7 @@
 
 {% block header %}
     <link rel="stylesheet" href="{{ asset('css/ville-index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/villeEdit.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,7 +17,8 @@
                     {{ include('ville/_form.html.twig', {'button_label': 'Enregistrer'}) }}
                 </div>
                 <div class="mt-2">
-                    <a href="{{ path('ville_index') }}">Retour à la liste</a>
+
+                    <a href="{{ path('ville_index') }}" class="btn btn-success" type="button">Retour à la liste</a>
                 </div>
             </div>
         </div>
