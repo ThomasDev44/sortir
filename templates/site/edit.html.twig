@@ -2,6 +2,10 @@
 
 {% block title %}Modifier un Site{% endblock %}
 
+{% block header %}
+    <link rel="stylesheet" href="{{ asset('css/siteEdit.css') }}">
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -12,7 +16,7 @@
                     {{ include('site/_form.html.twig', {'button_label': 'Enregistrer'}) }}
                 </div>
                 <div class="mt-2">
-                    <a href="{{ path('site_index') }}">Retour à la liste</a>
+                    <a href="{{ path('site_index') }}" class="btn btn-success" type="button">Retour à la liste</a>
                 </div>
             </div>
         </div>
