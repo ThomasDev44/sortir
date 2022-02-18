@@ -61,12 +61,12 @@ class ProfilController extends AbstractController
                  ]);
              }*/
 
-            $participant->setPassword(
+            /*$participant->setPassword(
                 $userPasswordHasher->hashPassword(
                     $participant,
                     $form->get('password')->getData()
                 )
-            );
+            );*/
 
             $entityManager->persist($participant);
             $entityManager->flush();
