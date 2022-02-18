@@ -7,6 +7,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use App\Service\ChangerEtat;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,13 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('', name: 'accueil')]
-    public function index(SiteRepository   $siteRepository,
-                          SortieRepository $sortieRepository,
+    public function index(SiteRepository         $siteRepository,
+                          SortieRepository       $sortieRepository,
+                          ChangerEtat            $changerEtat,
+                          EtatRepository         $etatRepository,
+                          EntityManagerInterface $entityManager,
 
     ): Response
 
     {
-
+        $changerEtat->verifierEtat();
         $sites = $siteRepository->findAll();
         $sorties = $sortieRepository->findAll();
         return $this->render('accueil/index.html.twig', [
@@ -35,6 +39,8 @@ class AccueilController extends AbstractController
     #[Route('/recherche', name: 'recherche')]
     public function rechercheParFiltre(SiteRepository   $siteRepository,
                                        SortieRepository $sortieRepository,
+                                       ChangerEtat      $changerEtat,
+
     ): Response
 
     {
@@ -71,7 +77,9 @@ class AccueilController extends AbstractController
                 $choixOrganisateur, $choixInscrit, $choixPasInscrit, $choixPassee);
         }
 
+        $changerEtat->verifierEtat();
         $sites = $siteRepository->findAll();
+
         return $this->render('accueil/index.html.twig', [
             "sorties" => $sorties,
             "sites" => $sites,
@@ -92,6 +100,7 @@ class AccueilController extends AbstractController
                              ParticipantRepository $participantRepository,
                              SiteRepository $siteRepository,
                              EntityManagerInterface $entityManager,
+                             ChangerEtat $changerEtat,
     ): Response
     {
         $erreur = false;
@@ -133,7 +142,7 @@ class AccueilController extends AbstractController
             $entityManager->flush();
         }
 
-
+        $changerEtat->verifierEtat();
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', ['sorties' => $sorties,
@@ -147,8 +156,10 @@ class AccueilController extends AbstractController
                              ParticipantRepository $participantRepository,
                              SiteRepository $siteRepository,
                              EntityManagerInterface $entityManager,
+                             ChangerEtat $changerEtat,
     ): Response
     {
+
         $erreur = false;
         $isInscrit = false;
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
@@ -168,6 +179,8 @@ class AccueilController extends AbstractController
             $entityManager->persist($laSortie);
             $entityManager->flush();
         }
+
+        $changerEtat->verifierEtat();
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
@@ -183,6 +196,7 @@ class AccueilController extends AbstractController
                             SiteRepository $siteRepository,
                             EntityManagerInterface $entityManager,
                             EtatRepository $etatRepository,
+                            ChangerEtat $changerEtat,
     ): Response
     {
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
@@ -196,7 +210,7 @@ class AccueilController extends AbstractController
             $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie");
         }
 
-
+        $changerEtat->verifierEtat();
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
@@ -210,6 +224,7 @@ class AccueilController extends AbstractController
                                        SortieRepository $sortieRepository,
                                        SiteRepository $siteRepository,
                                        ParticipantRepository $participantRepository,
+                                       ChangerEtat $changerEtat,
 
 
     ): Response
@@ -235,6 +250,8 @@ class AccueilController extends AbstractController
                 'annuler' => $annuler,
             ]);
         } else {
+
+            $changerEtat->verifierEtat();
             $sorties = $sortieRepository->findAll();
             $sites = $siteRepository->findAll();
             return $this->render('accueil/index.html.twig', [
@@ -252,6 +269,7 @@ class AccueilController extends AbstractController
                             SiteRepository $siteRepository,
                             EntityManagerInterface $entityManager,
                             EtatRepository $etatRepository,
+                            ChangerEtat $changerEtat,
     ): Response
     {
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
@@ -280,7 +298,7 @@ class AccueilController extends AbstractController
             $entityManager->flush();
         }
 
-
+        $changerEtat->verifierEtat();
         $sorties = $sortieRepository->findAll();
         $sites = $siteRepository->findAll();
         return $this->render('accueil/index.html.twig', [
@@ -294,6 +312,8 @@ class AccueilController extends AbstractController
                              SortieRepository $sortieRepository,
                              ParticipantRepository $participantRepository,
                              SiteRepository $siteRepository,
+                             ChangerEtat $changerEtat,
+
 
     ): Response
     {
@@ -306,6 +326,7 @@ class AccueilController extends AbstractController
             $this->addFlash('error', "La sortie est toujours en cours de création");
             $erreur = true;
         }
+        $changerEtat->verifierEtat();
         if ($erreur == false) {
             return $this->render('sortie/show.html.twig', [
                 "sortie" => $laSortie,
@@ -329,16 +350,14 @@ class AccueilController extends AbstractController
                              EntityManagerInterface $entityManager,
                              SiteRepository $siteRepository,
                              ParticipantRepository $participantRepository,
+                             ChangerEtat $changerEtat,
 
     ): Response
     {
-
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
 
         $form = $this->createForm(SortieType::class, $laSortie);
         $form->handleRequest($request);
-        $sites = $siteRepository->findAll();
-        $sorties = $sortieRepository->findAll();
         $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $erreur = false;
 
@@ -365,6 +384,9 @@ class AccueilController extends AbstractController
             }
 
             if ($erreur == false) {
+                $changerEtat->verifierEtat();
+                $sites = $siteRepository->findAll();
+                $sorties = $sortieRepository->findAll();
                 $entityManager->persist($laSortie);
                 $entityManager->flush();
                 return $this->render('accueil/index.html.twig', [
@@ -385,6 +407,7 @@ class AccueilController extends AbstractController
                               EntityManagerInterface $entityManager,
                               SiteRepository $siteRepository,
                               ParticipantRepository $participantRepository,
+                              ChangerEtat $changerEtat,
     ): Response
     {
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
@@ -404,7 +427,7 @@ class AccueilController extends AbstractController
             $entityManager->remove($laSortie);
             $entityManager->flush();
         }
-
+        $changerEtat->verifierEtat();
         $sites = $siteRepository->findAll();
         $sorties = $sortieRepository->findAll();
 

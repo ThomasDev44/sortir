@@ -115,8 +115,8 @@
                     {% for eachSortie in sorties %}
                     <tr>
                         <td>{{ eachSortie.nom }}</td>
-                        <td>{{ eachSortie.dateHeureDebut.format('d/m/Y h:m') }}</td>
-                        <td>{{ eachSortie.dateLimiteInscription.format('d/m/Y') }}</td>
+                        <td>{{ eachSortie.dateHeureDebut.format('d/m/Y H:i') }}</td>
+                        <td>{{ eachSortie.dateLimiteInscription.format('d/m/Y H:i') }}</td>
                         <td>{{ eachSortie.participants|length }}/{{ eachSortie.nbInscriptionsMax }}</td>
                         <td>{{ eachSortie.etat.libelle }}</td>
                         {% set isInscrit = false %}
