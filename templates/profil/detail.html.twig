@@ -14,15 +14,17 @@
         </div>
     </div>
 
-    <div class="form-group text-center" >
+    <div class="form-group text-center">
         <div class="col col-md-12">
-            {% if participant.images!=null %}<img src="{{ asset('images/photoprofil/'~participant.images) }}" width=150" height="150" alt="" class="image-ronde">
-            {% else %}<img src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" width=150" height="150" alt="" class="image-ronde">
+            {% if participant.images!=null %}<img src="{{ asset('images/photoprofil/'~participant.images) }}" width=150"
+                                                  height="150" alt="" class="image-ronde">
+            {% else %}<img src="{{ asset('images/photoprofil/avatarDefaut.jpeg') }}" width=150" height="150" alt=""
+                           class="image-ronde">
             {% endif %}
         </div>
     </div>
 
-    <div class="box ">
+    <div class="box-profil">
         <div class="card-body mb-4">
 
             <div class="card-body text-center">
@@ -73,9 +75,9 @@
                 <hr>
                 <br>
                 <div class="row">
-                <div class="col-sm-12">
-                    <a href="{{ path('main_accueil') }}" role="button" class="btn btn-danger">Retour</a>
-                </div>
+                    <div class="col-sm-12">
+                        <a href="{{ path('main_accueil') }}" role="button" class="btn btn-danger">Retour</a>
+                    </div>
                 </div>
             </div>
         </div>

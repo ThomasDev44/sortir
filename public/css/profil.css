@@ -6,7 +6,7 @@
     color: white;
 }
 
-.box {
+.box-profil {
     display: flex;
     flex-direction: row;
     width: 40%;
