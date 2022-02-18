@@ -275,6 +275,7 @@ class AccueilController extends AbstractController
         $laSortie = $sortieRepository->findOneBy(['id' => $idSortie], []);
         $user = $participantRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
         $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+        $motif = filter_input(INPUT_POST, 'motif', FILTER_SANITIZE_STRING);
         $admin = false;
         $erreur = false;
         foreach ($user->getRoles() as $value) {
@@ -293,6 +294,7 @@ class AccueilController extends AbstractController
 
 
         if (($erreur == false) or ($admin == true)) {
+            $laSortie->setMotif($motif);
             $laSortie->setEtat($etat);
             $entityManager->persist($laSortie);
             $entityManager->flush();

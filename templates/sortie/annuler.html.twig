@@ -56,29 +56,32 @@
                     </div>
                 </div>
             </div>
-            <div class="motif">
+            <form action="{{ path('main_annuler', {'idSortie': sortie.id}) }}" method="post">
+                <div class="motif">
+                    <div class="row">
+                        <div class="col-md-4 col-2"></div>
+                        <div class="col-md-3 col-lg-2 col-sm-4 col-4">
+                            <label for="story">Motif :</label>
+                        </div>
+                        <div class="col-md-4  col-5">
+                            <textarea id="story" name="motif"
+                                      rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4 col-2"></div>
                     <div class="col-md-3 col-lg-2 col-sm-4 col-4">
-                        <label for="story">Motif :</label>
+                        <button type="submit" class="btn btn-success btn-lg">Enregistrer</button>
                     </div>
-                    <div class="col-md-4  col-5">
-                            <textarea id="story" name="story"
-                                      rows="5"></textarea>
+
+                    <div class="col-md-4 col-5">
+                        <a href="{{ path('main_accueil') }}" class="btn btn-danger btn-lg">Annuler</a>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="mt-4"></div>
-        <div class="row">
-            <div class="col-md-4 col-2"></div>
-            <div class="col-md-3 col-lg-2 col-sm-4 col-4">
-                <a href="{{ path('main_annuler', {'idSortie': sortie.id}) }}"
-                   class="btn btn-success btn-lg">Enregistrer</a>
-            </div>
-            <div class="col-md-4 col-5">
-                <a href="{{ path('main_accueil') }}" class="btn btn-danger btn-lg">Annuler</a>
-            </div>
-        </div>
+
     </div>
 {% endblock %}
