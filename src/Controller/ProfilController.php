@@ -54,6 +54,7 @@ class ProfilController extends AbstractController
         ) {
             $erreur = false;
 
+
 //             est ce que le pseudo est unique
 //             utilisation d'une méthode que nous allons ajouter au repository
 
@@ -77,6 +78,7 @@ class ProfilController extends AbstractController
                 ]);
 
             } else {
+
                 $entityManager->persist($participant);
                 $entityManager->flush();
                 $this->addFlash('bravo', 'Votre profil a été modifié');

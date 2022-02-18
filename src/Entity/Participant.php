@@ -349,6 +349,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface, 
         $this->fichierImage = $fichier;
         if ($fichier) {
             $this->username;
+            $this->images = $fichier->getFilename();
         }
         return $this;
     }
