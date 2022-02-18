@@ -283,17 +283,18 @@ class AccueilController extends AbstractController
                 $admin = true;
             }
         }
-        if ($laSortie->getOrganisateur() !== $user) {
-            $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie");
-            $erreur = true;
-        }
-        if ($laSortie->getEtat()->getLibelle() != 'Ouverte') {
-            $this->addFlash('error', "L'êtat de la sortie ne permet pas cette action");
-            $erreur = true;
+        if ($admin == false) {
+            if ($laSortie->getOrganisateur() !== $user) {
+                $this->addFlash('error', "Vous n'êtes pas l'organisateur de cette sortie");
+                $erreur = true;
+            }
+            if ($laSortie->getEtat()->getLibelle() != 'Ouverte') {
+                $this->addFlash('error', "L'êtat de la sortie ne permet pas cette action");
+                $erreur = true;
+            }
         }
 
-
-        if (($erreur == false) or ($admin == true)) {
+        if (($erreur == false)) {
             $laSortie->setMotif($motif);
             $laSortie->setEtat($etat);
             $entityManager->persist($laSortie);
