@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\ParticipantRepository;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +16,13 @@ class ConnexionController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request, ParticipantRepository $participantRepository): Response
     {
 
-       if ($this->getUser()) {
-             return $this->redirectToRoute('main_accueil');
-         }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('main_accueil');
+        }
+
 
         //récupérer bouton name
         // get the login error if there is one

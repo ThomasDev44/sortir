@@ -159,7 +159,7 @@
                                 -
                                 <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"
                                    class="link-light">
-                                     Se
+                                    Se
                                     désister</a>
                             {% endif %}
                             {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
@@ -187,54 +187,60 @@
                         {% endif %}
                     {% endfor %}
                     <div class="col-lg-6 col-sm-12">
-                        <div class="card text-black bg-dark">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ eachSortie.nom }}</h5>
-                                <p class="card-text">
-                                <p>Date de la sortie : {{ eachSortie.dateHeureDebut.format('d/m/Y h:m') }}</p>
-                                <p>Clôture : {{ eachSortie.dateLimiteInscription.format('d/m/Y') }}</p>
-                                <p>inscrits/places : {{ eachSortie.participants|length }}
-                                    /{{ eachSortie.nbInscriptionsMax }}</p>
-                                <p>Etat : {{ eachSortie.etat.libelle }}</p>
-                                {% if isInscrit == true %}
-                                    <p>Inscrit</p>
-                                {% else %}
-                                    <p>Pas inscrit</p>
-                                {% endif %}
-                                <div class="organisateur"> Organisateur : <a
-                                            href="{{ path('detail', {'id' : eachSortie.organisateur.id}) }}"
-                                            class="link-light"> {{ eachSortie.organisateur }}</a></div>
+                        <div class="box">
+                            <div id="card-container">
+                                <div id="card">
+                                    <div class="front face">
+                                        <h1 class="title-card text-center">{{ eachSortie.nom }}</h1>
+                                        <p class="p-card-face">Date de la sortie
+                                            : {{ eachSortie.dateHeureDebut.format('d/m/Y H:i') }}</p>
+                                        <p class="p-card-face">Clôture : {{ eachSortie.dateLimiteInscription.format('d/m/Y H:i') }}</p>
+                                    </div>
+                                    <div class="back face">
+                                        <p class="p-card">inscrits/places : {{ eachSortie.participants|length }}
+                                            / {{ eachSortie.nbInscriptionsMax }}</p>
+                                        <p class="p-card">Etat : {{ eachSortie.etat.libelle }}</p>
+                                        {% if isInscrit == true %}
+                                            <p class="p-card">Inscrit</p>
+                                        {% else %}
+                                            <p class="p-card">Pas inscrit</p>
+                                        {% endif %}
+                                        <div class="organisateur"> Organisateur : <a
+                                                    href="{{ path('detail', {'id' : eachSortie.organisateur.id}) }}"
+                                                    class="link-success"> {{ eachSortie.organisateur }}</a></div>
 
-                                {% set isOrganisateur = false %}
-                                {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
-                                    {% set isOrganisateur = true %}
-                                {% endif %}
-                                <div class="d-flex justify-content-around mt-3">
-                                    {% if eachSortie.etat != 'Créée' %}
-                                        <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}"
-                                           class="btn btn-success" role="button">Afficher</a>
-                                    {% endif %}
-                                    {% if (eachSortie.etat == 'Créée') and (isOrganisateur == true) %}
-                                        <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}"
-                                           class="btn btn-success" role="button">Modifier</a>
-                                        <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}"
-                                           class="btn btn-success" role="button">Publier</a>
-                                    {% endif %}
-                                    {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
-                                        <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"
-                                           class="btn btn-success" role="button"> Annuler</a>
-                                    {% endif %}
-                                    {% if isInscrit == true %}
-                                        <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"
-                                           class="btn btn-success" role="button">
-                                            Se
-                                            désister</a>
-                                    {% endif %}
-                                    {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
-                                        <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"
-                                           class="btn btn-success" role="button">
-                                            S'inscrire</a>
-                                    {% endif %}
+                                        {% set isOrganisateur = false %}
+                                        {% if eachSortie.organisateur.userIdentifier == app.user.userIdentifier %}
+                                            {% set isOrganisateur = true %}
+                                        {% endif %}
+                                        <div class="d-flex justify-content-around mt-3">
+                                            {% if eachSortie.etat != 'Créée' %}
+                                                <a href="{{ path('main_afficher', {'idSortie' : eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button">Afficher</a>
+                                            {% endif %}
+                                            {% if (eachSortie.etat == 'Créée') and (isOrganisateur == true) %}
+                                                <a href="{{ path('main_modifier', {'idSortie' : eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button">Modifier</a>
+                                                <a href="{{ path('main_publier', {'idSortie' : eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button">Publier</a>
+                                            {% endif %}
+                                            {% if  (eachSortie.etat == 'Ouverte') and (isOrganisateur == true) %}
+                                                <a href="{{ path('main_annulerRedirection', {'idSortie': eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button"> Annuler</a>
+                                            {% endif %}
+                                            {% if isInscrit == true %}
+                                                <a href="{{ path('main_desister', {'idSortie' : eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button">
+                                                    Se
+                                                    désister</a>
+                                            {% endif %}
+                                            {% if (isInscrit == false) and (eachSortie.etat == 'Ouverte') and (isOrganisateur == false) %}
+                                                <a href="{{ path('main_inscrire', {'idSortie' : eachSortie.id}) }}"
+                                                   class="btn btn-success" role="button">
+                                                    S'inscrire</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

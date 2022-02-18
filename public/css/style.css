@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
 body {
     background-color: #011f39 !important;
     /* On indique un redimensionnement proportionnel */
@@ -87,6 +89,68 @@ label {
 
 form {
     display: inline;
+}
+
+.box {
+    width: 800px;
+    margin: 10% auto;
+    position: relative;
+}
+#card-container {
+    margin: 30px;
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+    float: left;
+    perspective: 1000px;
+}
+#card {
+    width: 150%;
+    height: 110%;
+    margin: 10%;
+    transform-style: preserve-3d;
+    transition: all 0.8s linear;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .3);
+    background-color: #198754 ;
+}
+#card:hover {
+    transform: rotateY(180deg);
+    box-shadow: -5px 5px 15px rgba(0, 0, 0, .3);
+}
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+.back {
+    display: block;
+    transform: rotateY(180deg);
+    box-sizing: border-box;
+    text-align: center;
+    opacity: 1;
+    background: #f9f3e4;
+}
+h1, .title-card {
+    font-family: 'Questrial', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.title-card {
+    font-size: 1.2em;
+    padding-top: 15px;
+    color: white;
+}
+.p-card, .organisateur {
+    color: #198754;
+}
+.p-card-face{
+    margin-left: 10px;
+    color: white;
+    font-size: 0.8em;
+}
+.date {
+    color: white;
 }
 * {
     color: white;

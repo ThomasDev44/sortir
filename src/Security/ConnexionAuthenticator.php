@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Repository\ParticipantRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ class ConnexionAuthenticator extends AbstractLoginFormAuthenticator
         } else {
             setcookie('cookieUsername', '', time() + 604800);
         }
+
 
         return new Passport(
             new UserBadge($username),
