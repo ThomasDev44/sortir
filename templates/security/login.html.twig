@@ -48,7 +48,7 @@
                     <div class="text-center p-t-115">
                         <div class="checkbox mb-3"><br>
                             <label>
-                                <input id="remember_me" type="checkbox" name="remember_me" value="on"> Se souvenir de
+                                <input id="remember_me" type="checkbox" name="remember_me" value="on" {% if app.request.cookies.get('cookieUsername') != '' %} checked="checked" {% endif %}> Se souvenir de
                                 moi
                             </label>
                         </div>
