@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use function Sodium\add;
 
 
 class ProfilController extends AbstractController
@@ -43,6 +44,7 @@ class ProfilController extends AbstractController
     {
         $participant = $this->getUser()->getUserIdentifier();
         $participant = $participantRepository->findOneBy(['username' => $participant]);
+        $tousLesParticipants = $participantRepository->findAll();
 
         $form = $this->createForm(ProfilType::class, $participant);
         $form->handleRequest($request);
@@ -50,16 +52,37 @@ class ProfilController extends AbstractController
         if ($form->isSubmitted()
             && $form->isValid()
         ) {
-             /*//est ce que le pseudo est unique
-             //utilisation d'une méthode que nous allons ajouter au repository
-             if($participantRepository->findOneByPseudo($participant->getUserIdentifier()) != null)
-             {// s'il ne l'est pas, on renvoie vers la page de création d'utilisateur avec une notification
-                 return $this->render('profil/index.html.twig', [
-                     'participant' => $participant,
-                     'form'        => $form->createView(),
-                     'message'     => "Ce pseudo est déjà utilisé, merci d'en changer"
-                 ]);
-             }*/
+            $erreur = false;
+
+//             est ce que le pseudo est unique
+//             utilisation d'une méthode que nous allons ajouter au repository
+
+            foreach ($tousLesParticipants as $value) {
+
+                if ($value->getId() != $participant->getId()) {
+                    if (strtolower($value->getUserIdentifier()) == strtolower($participant->getUserIdentifier())) {
+                        $this->addFlash('error', 'Pseudo déjà utilisé');
+                        $erreur = true;
+                    }
+                    if (strtolower($value->getMail()) == strtolower($participant->getMail())) {
+                        $this->addFlash('error', 'Mail déjà utilisé');
+                        $erreur = true;
+                    }
+                }
+            }
+            if ($erreur == true) {
+                return $this->render('profil/index.html.twig', [
+                    'participant' => $participant,
+                    'form' => $form->createView(),
+                ]);
+
+            } else {
+                $entityManager->persist($participant);
+                $entityManager->flush();
+                $this->addFlash('bravo', 'Votre profil a été modifié');
+                /*return $this->redirectToRoute('main_accueil', ['id' => $participant->getId()]);*/
+            }
+
 
             /*$participant->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -68,11 +91,8 @@ class ProfilController extends AbstractController
                 )
             );*/
 
-            $entityManager->persist($participant);
-            $entityManager->flush();
-            $this->addFlash('bravo', 'Votre profil a été modifié');
-            /*return $this->redirectToRoute('main_accueil', ['id' => $participant->getId()]);*/
         }
+
 
         return $this->renderForm('profil/index.html.twig',
             compact("form", "participant") // ["monFormulaireIdee" => $monFormulaireIdee]

@@ -21,6 +21,7 @@
                 </thead>
                 <tbody>
                 {% for sortie in sorties %}
+                    {% if sortie.etat.libelle != 'Annulée' %}
                     <tr>
                         <td>{{ sortie.id }}</td>
                         <td>{{ sortie.nom }}</td>
@@ -33,6 +34,7 @@
                                class="btn btn-success" type="button">Annuler</a>
                         </td>
                     </tr>
+                    {% endif %}
                 {% else %}
                     <tr>
                         <td colspan="8">Pas de sorties trouvées</td>

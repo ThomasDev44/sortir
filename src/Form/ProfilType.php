@@ -48,15 +48,16 @@ class ProfilType extends AbstractType
                 'label' => 'Site de rattachement :',
                 'class' => Site::class,
             ])
-            ->add('enregistrer', SubmitType::class, [
-                'attr' => ['class' => 'enregistrer'],
-            ])
             ->add('fichierImage', VichFileType::class, [
                 "label" => "Ajouter une image",
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
             ])
+            ->add('enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'enregistrer'],
+            ])
+
         ;
     }
 
